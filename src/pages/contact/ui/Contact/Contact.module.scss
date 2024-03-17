@@ -1,0 +1,105 @@
+@import '@/app/styles/mixins/mixins.scss';
+@import '@/app/styles/variables/backgroundColor.scss';
+@import '@/app/styles/variables/fontColor.scss';
+
+.Contact {
+	width: 100%;
+	@include FlexDirection;
+	padding-bottom: 100px;
+}
+
+.headerContact {
+	width: 81.25%;
+	@include FlexContainer(space-between);
+	padding: 100px 0;
+	font-size: 14px;
+	line-height: 21px;
+}
+
+.roadMap {
+	@include FlexContainer;
+
+	p {
+		opacity: 0.5;
+	}
+}
+
+.mainContact {
+	width: 81.25%;
+	@include FlexContainer(space-between);
+}
+
+.shopContact {
+	border-radius: 4px;
+	box-shadow: 0 1px 13px 0 rgba(0, 0, 0, 0.05);
+	padding: 40px 35px;
+	@include FlexDirection(flex-start);
+	gap: 32px;
+}
+
+.cardContact {
+	width: 100%;
+	border-bottom: 1px solid $secondaryBackgroundColor;
+	@include FlexDirection(flex-start);
+	gap: 24px;
+	padding-bottom: 24px;
+}
+
+.cardContact:last-child {
+	border: none;
+}
+
+.headerCardContact {
+	@include FlexContainer(flex-start);
+	gap: 16px;
+	font-weight: 500;
+}
+
+.mainCardContact {
+	@include FlexDirection(flex-start);
+	gap: 16px;
+	font-size: 14px;
+	line-height: 21px;
+}
+
+.userContact {
+	width: 70%;
+	border-radius: 4px;
+	box-shadow: 0 1px 13px 0 rgba(0, 0, 0, 0.05);
+	padding: 40px 35px;
+}
+
+.formUserContact {
+	width: 100%;
+	@include FlexDirection;
+	gap: 32px;
+}
+
+.inputsUserContact {
+	width: 100%;
+	@include FlexContainer(space-between);
+}
+
+.inputWrapper {
+	position: relative;
+	height: 50px;
+	width: 30%;
+
+	input {
+		width: 100%;
+		padding: 13px 16px;
+	}
+}
+
+input+span {
+	position: absolute;
+}
+
+.textareaUserContact {
+	width: 100%;
+}
+
+.sendFormButton {
+	width: 100%;
+	@include FlexContainer(flex-end)
+}

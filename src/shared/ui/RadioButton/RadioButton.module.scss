@@ -1,0 +1,33 @@
+@import '@/app/styles/variables/backgroundColor.scss';
+@import '@/app/styles/mixins/mixins.scss';
+
+.buttonWrapper{
+@include FlexContainer
+}
+.RadioButton {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+
+  &:checked {
+    border: 2px solid black;
+  }
+}
+
+.accentBC {
+  background-color: $accentColor;
+}
+
+.yellowBC {
+  background-color: #EEFF61;
+}
+
+.redBC {
+  background-color: #FB1314;
+}
+
+.blueBC {
+  background-color: #A0BCE0
+}

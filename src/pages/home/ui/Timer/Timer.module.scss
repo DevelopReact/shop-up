@@ -1,0 +1,38 @@
+@import '@/app/styles/mixins/mixins.scss';
+@import '@/app/styles/variables/backgroundColor.scss';
+
+.Timer {
+	@include FlexContainer;
+	gap: 30px;
+}
+
+.colon {
+	@include FlexDirection;
+	gap: 8px;
+}
+
+.dot {
+	width: 4px;
+	height: 4px;
+	border-radius: 50%;
+	background-color: $accentColor;
+}
+
+.date {
+	@include FlexDirection(flex-start);
+	gap: 4px;
+
+	p {
+		font-weight: 500;
+		font-size: 12px;
+		line-height: 18px;
+	}
+
+	span {
+		font-family: 'Inter', sans-serif;
+		font-weight: 700;
+		font-size: 32px;
+		line-height: 30px;
+		letter-spacing: 4%;
+	}
+}

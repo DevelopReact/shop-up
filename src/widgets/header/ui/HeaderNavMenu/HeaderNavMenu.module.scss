@@ -1,0 +1,36 @@
+@import '@/app/styles/variables/backgroundColor.scss';
+@import '@/app/styles/variables/fontColor.scss';
+@import '@/app/styles/mixins/mixins.scss';
+
+.HeaderNavMenu {
+	@include FlexContainer;
+	border-bottom: .5px solid rgba(0, 0, 0, .3);
+}
+
+.wrapperNavMenu {
+	width: 81.25%;
+	@include FlexContainer(space-between);
+	padding: 40px 0 10px 0;
+}
+
+.wrapperNavLink {
+	@include FlexContainer;
+	gap: 48px;
+}
+
+.wrapperInputSearch {
+	height: 38px;
+	padding: 7px 12px 7px 20px;
+	@include FlexContainer;
+	background-color: $secondaryAccentColor;
+	border-radius: 4px;
+}
+
+.searchIcon {
+	cursor: pointer;
+}
+
+.wrapperIconButtons {
+	@include FlexContainer;
+	gap: 16px;
+}

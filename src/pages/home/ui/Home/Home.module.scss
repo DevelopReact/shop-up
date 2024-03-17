@@ -1,0 +1,6 @@
+@import '@/app/styles/mixins/mixins.scss';
+
+.Home {
+	position: relative;
+	@include FlexDirection;
+}

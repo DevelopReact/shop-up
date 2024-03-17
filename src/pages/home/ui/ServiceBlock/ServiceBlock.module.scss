@@ -1,0 +1,34 @@
+@import '@/app/styles/mixins/mixins.scss';
+@import '@/app/styles/variables/backgroundColor.scss';
+@import '@/app/styles/variables/fontColor.scss';
+
+.ServiceBlock {
+	@include FlexDirection;
+	gap: 24px;
+}
+
+.iconService {
+	width: 80px;
+	height: 80px;
+	border: 10px solid silver;
+	border-radius: 50%;
+	background-color: black;
+	@include FlexContainer
+}
+
+.titleService {
+	@include FlexDirection;
+	gap: 8px;
+
+	p {
+		font-weight: 600;
+		font-size: 20px;
+		line-height: 28px;
+	}
+
+	span {
+		font-weight: 400;
+		font-size: 14px;
+		line-height: 21px;
+	}
+}

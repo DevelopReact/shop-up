@@ -1,0 +1,26 @@
+@import '@/app/styles/mixins/mixins.scss';
+@import '@/app/styles/variables/backgroundColor.scss';
+@import '@/app/styles/variables/fontColor.scss';
+
+.CategoryButton {
+	@include FlexDirection;
+	gap: 8px;
+	width: 170px;
+	height: 145px;
+	border-radius: 4px;
+	border: 1px solid rgba(0, 0, 0, .3);
+	cursor: pointer;
+}
+
+.CategoryButton:hover {
+	background-color: $accentColor;
+
+	svg path,
+	line {
+		stroke: $secondaryTextColor;
+	}
+
+	p {
+		color: $secondaryTextColor;
+	}
+}

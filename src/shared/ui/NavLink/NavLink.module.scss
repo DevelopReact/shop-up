@@ -1,0 +1,36 @@
+@import '@/app/styles/mixins/mixins.scss';
+@import '@/app/styles/variables/fontColor.scss';
+
+.NavLink {
+	width: 48px;
+	height: 100%;
+	font-size: 16px;
+	line-height: 24px;
+	@include FlexContainer
+}
+
+.underline {
+	text-decoration: underline;
+}
+.underlineNone{
+	text-decoration: none;
+}
+
+.textColorBlack {
+	color: $mainTextColor
+}
+
+.textColorAccent {
+	color: $accentTextColor
+}
+
+.textOpacity {
+	opacity: .5;
+	text-decoration: none;
+	color: $mainTextColor
+}
+
+.unActive{
+	text-decoration: none;
+	color: $mainTextColor
+}

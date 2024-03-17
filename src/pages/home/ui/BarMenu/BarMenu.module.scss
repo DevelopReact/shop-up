@@ -1,0 +1,79 @@
+@import '@/app/styles/mixins/mixins.scss';
+@import '@/app/styles/variables/backgroundColor.scss';
+@import '@/app/styles/variables/fontColor.scss';
+
+.BarMenu {
+	width: 81.25%;
+	@include FlexContainer(space-between);
+}
+
+.barMenuSection {
+	@include FlexDirection(flex-start);
+	width: 217px;
+	gap: 16px;
+	padding-right: 20px;
+}
+
+.liBarMenu {
+	width: 100%;
+	@include FlexContainer;
+	justify-content: space-between;
+}
+
+.liBarMenu>a {
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+.slideBarWrapper {
+	position: relative;
+	padding-top: 50px;
+	width: 100%;
+	@include FlexDirection;
+	border-left: 0.5px solid rgba(0, 0, 0, 0.3);
+}
+
+.slideBar {
+	padding: 20px 50px;
+	background-color: $secondaryBackgroundColor;
+	color: $secondaryTextColor;
+	@include FlexContainer(space-between);
+}
+
+.titleSlideBar {
+	@include FlexDirection(flex-start);
+	gap: 20px;
+}
+
+.headerSlideBar {
+	@include FlexContainer;
+	gap: 24px;
+}
+
+.mainSlideBar {
+	font-family: 'Inter', sans-serif;
+	font-weight: 600;
+	font-size: 48px;
+	line-height: 60px;
+	letter-spacing: 4%;
+}
+
+.footerSlideBar {
+	@include FlexContainer;
+	gap: 8px;
+}
+
+.slide {
+	position: absolute;
+	bottom: 20px;
+	@include FlexContainer;
+	gap: 12px;
+}
+
+.ellipse {
+	width: 12px;
+	height: 12px;
+	background-color: rgba(255, 255, 255, 0.5);
+	border-radius: 50%;
+}

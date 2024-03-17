@@ -1,0 +1,57 @@
+@import '@/app/styles/mixins/mixins.scss';
+@import '@/app/styles/variables/backgroundColor.scss';
+@import '@/app/styles/variables/fontColor.scss';
+
+.Input {
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 24px;
+	height: 100%;
+	gap: 8px;
+	@include FlexContainer(start);
+}
+
+::placeholder {
+	color: rgba(0, 0, 0, .4);
+}
+
+.whiteBC {
+	background-color: $mainBackgroundColor
+}
+
+.blackBC {
+	background-color: $secondaryBackgroundColor
+}
+
+.greyBC {
+	background-color: $secondaryAccentColor
+}
+
+.borderBlack {
+	border: 1px solid $secondaryBackgroundColor;
+}
+
+.borderOpacity {
+	border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.whiteColor {
+	color: $secondaryTextColor
+}
+
+.errorInput {
+	border: 1px solid $accentColor;
+}
+
+input {
+	border-radius: 4px;
+}
+
+input+span {
+	font-size: 14px;
+	color: $accentTextColor
+}
+
+input::placeholder{
+	color: $mainOpacityColor
+}

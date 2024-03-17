@@ -1,0 +1,15 @@
+@import '@/app/styles/mixins/mixins.scss';
+@import '@/app/styles/variables/backgroundColor.scss';
+@import '@/app/styles/variables/fontColor.scss';
+
+.coupon{
+	@include FlexContainer;
+	gap: 16px;
+}
+
+.couponInput{
+	width: 300px;
+	padding: 16px 24px;
+	border: 1px solid $secondaryBackgroundColor;
+	border-radius: 4px;
+}

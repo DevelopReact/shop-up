@@ -1,0 +1,70 @@
+@import '@/app/styles/mixins/mixins.scss';
+@import '@/app/styles/variables/backgroundColor.scss';
+@import '@/app/styles/variables/fontColor.scss';
+
+.headerTodayOffer {
+	@include FlexDirection(flex-start);
+	gap: 24px;
+}
+
+.titleTodayOffer {
+	width: 100%;
+	@include FlexContainer(space-between);
+	gap: 24px;
+	font-family: 'Inter', sans-serif;
+	font-weight: 600;
+	font-size: 36px;
+	line-height: 48px;
+}
+
+.rectangleWrapper {
+	@include FlexContainer;
+	gap: 16px;
+	color: $accentTextColor;
+	font-weight: 600;
+	font-size: 16px;
+	line-height: 20px;
+}
+
+.rectangle {
+	width: 20px;
+	height: 40px;
+	border-radius: 4px;
+	background-color: $accentColor;
+}
+
+.arrowSlider {
+	@include FlexContainer;
+	gap: 8px;
+
+	div {
+		width: 46px;
+		height: 46px;
+		border-radius: 50%;
+	}
+}
+
+.OurProduct {
+	width: 81.25%;
+}
+
+.wrapperOurProducts{
+
+}
+
+.productOurCards {
+	padding-top: 60px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	row-gap: 60px;
+}
+
+.buttonOurProducts {
+	width: 100%;
+	@include FlexContainer
+}
+
+.navButton {
+	padding: 50px;
+}

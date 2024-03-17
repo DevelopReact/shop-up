@@ -1,0 +1,85 @@
+@import '@/app/styles/mixins/mixins.scss';
+@import '@/app/styles/variables/backgroundColor.scss';
+@import '@/app/styles/variables/fontColor.scss';
+
+.SignUp {
+	width: 90.6%;
+	@include FlexContainer(space-between);
+	padding: 60px 0 100px 0;
+}
+
+.icon {
+	img {
+		border-radius: 0 4px 4px 0;
+	}
+}
+
+.form {
+	width: 25%;
+	@include FlexDirection(flex-start);
+	gap: 48px;
+}
+
+.titleForm {
+	@include FlexDirection(flex-start);
+	gap: 24px;
+
+	p {
+		font-family: "Inter", sans-serif;
+		font-weight: 500;
+		font-size: 36px;
+		line-height: 30px;
+		letter-spacing: 4%;
+	}
+
+	span {
+		font-weight: 400;
+	}
+}
+
+.wrapperInputs {
+	width: 100%;
+	@include FlexDirection(flex-start);
+	gap: 40px;
+}
+
+.inputForm {
+	position: relative;
+	width: 100%;
+	padding-bottom: 8px;
+	border-bottom: 1px solid rgba(0, 0, 0, .5);
+
+	input::placeholder {
+		color: $mainOpacityColor;
+	}
+
+	input {
+		border: none
+	}
+}
+
+input+span {
+	position: absolute;
+	bottom: -25px;
+}
+
+.submitForm {
+	width: 100%;
+	@include FlexDirection;
+	gap: 20px;
+}
+
+.footerForm {
+	width: 100%;
+	@include FlexContainer;
+	gap: 16px;
+
+	span {
+		color: rgba(0, 0, 0, .7)
+	}
+
+	a {
+		color: rgba(0, 0, 0, .7);
+		font-weight: 500;
+	}
+}

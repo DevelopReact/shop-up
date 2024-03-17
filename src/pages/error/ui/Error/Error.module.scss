@@ -1,0 +1,50 @@
+@import '@/app/styles/mixins/mixins.scss';
+
+.Error {
+	@include FlexContainer;
+}
+
+.contentError {
+	width: 81.25%;
+	@include FlexDirection;
+	padding: 50px 0 100px 0;
+}
+
+.roadMap {
+	width: 100%;
+
+	p {
+		display: inline-block;
+		opacity: .5;
+	}
+}
+
+.descriptionError {
+	padding: 100px 0 80px 0;
+	@include FlexDirection;
+	gap: 40px;
+
+	h1 {
+		font-family: "Inter", sans-serif;
+		font-weight: 500;
+		font-size: 110px;
+		line-height: 115px;
+		letter-spacing: 3%;
+	}
+
+	p {
+		font-size: 16px;
+		line-height: 24px;
+	}
+}
+
+.navButton {
+
+	button {
+		width: 100%;
+		padding: 16px 48px 16px 48px;
+		font-weight: 500;
+		font-size: 16px;
+		line-height: 24px;
+	}
+}

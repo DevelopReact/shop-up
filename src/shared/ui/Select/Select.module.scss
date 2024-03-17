@@ -1,0 +1,31 @@
+@import '@/app/styles/variables/backgroundColor.scss';
+@import '@/app/styles/variables/fontColor.scss';
+@import '@/app/styles/mixins/mixins.scss';
+
+.wrapperSelect {
+	position: relative;
+}
+
+.Select {
+	@include FlexContainer;
+	background-color: $secondaryBackgroundColor;
+	color: $secondaryTextColor;
+	padding: 5px;
+	gap: 5px;
+	cursor: pointer;
+}
+
+.wrapperSelect>ul {
+	@include FlexDirection(flex-start);
+	padding: 5px;
+	position: absolute;
+	background-color: rgba(0, 0, 0, 0.4);
+	backdrop-filter: blur(5px);
+	color: $secondaryTextColor;
+	border-radius: 4px;
+}
+
+.wrapperSelect>ul>li:hover{
+	backdrop-filter: blur(5px);
+	cursor: pointer;
+}

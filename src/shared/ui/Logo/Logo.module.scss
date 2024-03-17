@@ -1,0 +1,17 @@
+@import '@/app/styles/variables/fontColor.scss';
+
+.Logo {
+	font-family: "Inter", sans-serif;
+	font-weight: 700;
+	font-style: bold;
+	line-height: 24px;
+	letter-spacing: 3%;
+}
+
+.whiteColor {
+	color: $secondaryTextColor
+}
+
+.blackColor {
+	color: $mainTextColor
+}

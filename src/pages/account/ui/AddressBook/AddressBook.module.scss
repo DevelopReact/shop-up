@@ -1,0 +1,69 @@
+@import '@/app/styles/mixins/mixins.scss';
+@import '@/app/styles/variables/backgroundColor.scss';
+@import '@/app/styles/variables/fontColor.scss';
+
+.formAccount {
+	width: 80%;
+	padding: 40px 80px;
+	border-radius: 4px;
+	box-shadow: 0 1px 13px 0 rgba(0, 0, 0, 0.05);
+	@include FlexDirection(space-between);
+	gap: 24px;
+}
+
+.title {
+	font-weight: 500;
+	font-size: 20px;
+	line-height: 28px;
+	color: $accentTextColor
+}
+
+.publicData {
+	@include FlexContainer;
+	gap: 50px;
+}
+
+.inputForm {
+	position: relative;
+	width: 100%;
+	@include FlexDirection(flex-start);
+	gap: 8px;
+
+	input {
+		height: 50px;
+		width: 100%;
+		padding: 13px 16px;
+	}
+
+	input::placeholder {
+		color: $mainOpacityColor;
+	}
+}
+
+input+span {
+	position: absolute;
+}
+
+textarea {
+	height: 200px;
+	width: 100%;
+	padding: 13px 16px;
+	font-family: "Poppins", sans-serif;
+	font-size: 16px;
+}
+
+textarea::placeholder {
+	color: $mainOpacityColor;
+}
+
+
+.securityData {
+	width: 100%;
+	@include FlexDirection(flex-start);
+	gap: 16px;
+}
+
+.wrapperButtons {
+	width: 100%;
+	@include FlexContainer(flex-end)
+}

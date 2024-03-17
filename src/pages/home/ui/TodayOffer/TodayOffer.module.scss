@@ -1,0 +1,108 @@
+@import '@/app/styles/mixins/mixins.scss';
+@import '@/app/styles/variables/backgroundColor.scss';
+@import '@/app/styles/variables/fontColor.scss';
+
+.todayOfferSection {
+	width: 81.25%;
+	padding: 100px 0 50px 0;
+}
+
+.headerTodayOffer {
+	@include FlexDirection(flex-start);
+	gap: 24px;
+}
+
+.titleTodayOffer {
+	width: 100%;
+	@include FlexContainer(space-between);
+	gap: 24px;
+	font-family: 'Inter', sans-serif;
+	font-weight: 600;
+	font-size: 36px;
+	line-height: 48px;
+}
+
+.saleTimer {
+	width: 50%;
+	@include FlexContainer(space-between);
+}
+
+.rectangleWrapper {
+	@include FlexContainer;
+	gap: 16px;
+	color: $accentTextColor;
+	font-weight: 600;
+	font-size: 16px;
+	line-height: 20px;
+}
+
+.rectangle {
+	width: 20px;
+	height: 40px;
+	border-radius: 4px;
+	background-color: $accentColor;
+}
+
+.dateTodayOffer {
+	@include FlexContainer;
+	gap: 30px;
+}
+
+.colon {
+	@include FlexDirection;
+	gap: 8px;
+}
+
+.dot {
+	width: 4px;
+	height: 4px;
+	border-radius: 50%;
+	background-color: $accentColor;
+}
+
+.date {
+	@include FlexDirection(flex-start);
+	gap: 4px;
+
+	p {
+		font-weight: 500;
+		font-size: 12px;
+		line-height: 18px;
+	}
+
+	span {
+		font-family: 'Inter', sans-serif;
+		font-weight: 700;
+		font-size: 32px;
+		line-height: 30px;
+		letter-spacing: 4%;
+	}
+}
+
+.arrowSlider {
+	@include FlexContainer;
+	gap: 8px;
+
+	div {
+		width: 46px;
+		height: 46px;
+		border-radius: 50%;
+	}
+}
+
+.wrapperProductCards {
+	width: 100%;
+	position: relative;
+	height: 350px;
+}
+
+.productCards {
+	position: absolute;
+	width: 90.6%;
+	right: 0;
+	@include FlexContainer(space-between);
+}
+
+.navButton {
+	padding: 50px;
+}

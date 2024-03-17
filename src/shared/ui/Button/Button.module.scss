@@ -1,0 +1,60 @@
+@import "@/app/styles/mixins/mixins.scss";
+@import "@/app/styles/variables/backgroundColor.scss";
+@import "@/app/styles/variables/fontColor.scss";
+
+.Button {
+	width: 100%;
+	padding: 16px 48px 16px 48px;
+	border-radius: 4px;
+	@include FlexContainer;
+	cursor: pointer;
+	gap: 10px;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 24px;
+}
+
+.accentBC {
+	background-color: $accentColor;
+}
+
+.blackBC {
+	background-color: $secondaryBackgroundColor;
+	border-radius: 0 0 4px 4px;
+}
+
+.whiteBC {
+	background-color: $mainBackgroundColor;
+}
+.mediumHeight {
+	height: 44px;
+}
+
+.smallHeight {
+	height: 41px;
+}
+
+.largeHeight {
+	height: 56px;
+}
+
+.whiteTC {
+	color: $secondaryTextColor;
+}
+
+.blackTC {
+	color: $mainTextColor;
+}
+
+.borderBlack {
+	border: 1px solid $secondaryBackgroundColor;
+}
+
+.borderOpacity {
+	border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.disabledButton{
+	cursor:auto;
+	opacity: .5;
+}

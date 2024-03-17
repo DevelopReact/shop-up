@@ -1,0 +1,25 @@
+@import '@/app/styles/mixins/mixins.scss';
+@import '@/app/styles/variables/backgroundColor.scss';
+
+.checkboxWrapper {
+	@include FlexContainer;
+	gap: 16px;
+}
+
+.Checkbox {
+	appearance: none;
+	cursor: pointer;
+}
+
+.accent {
+	width: 24px;
+	height: 24px;
+	background-color: $accentColor;
+	border-radius: 4px;
+
+	&:checked {
+		background-image: url('@/shared/libs/assets/svg/Check.svg');
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+}

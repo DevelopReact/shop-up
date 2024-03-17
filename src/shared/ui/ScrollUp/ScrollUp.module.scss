@@ -1,0 +1,19 @@
+@import '@/app/styles/mixins/mixins.scss';
+
+.ScrollUp {
+	width: 81.25%;
+	display: flex;
+	justify-content: flex-end;
+	padding: 50px 0;
+}
+
+.arrowSlider {
+	@include FlexContainer;
+	gap: 8px;
+
+	div {
+		width: 46px;
+		height: 46px;
+		border-radius: 50%;
+	}
+}

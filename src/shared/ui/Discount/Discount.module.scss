@@ -1,0 +1,19 @@
+@import '@/app/styles/mixins/mixins.scss';
+@import '@/app/styles/variables/backgroundColor.scss';
+@import '@/app/styles/variables/fontColor.scss';
+
+.Discount {
+	position: absolute;
+	left: 12px;
+	top: 12px;
+	width: 55px;
+	height: 26px;
+	border-radius: 4px;
+	padding: 4px 12px 4px 12px;
+	background-color: $accentColor;
+	color: $secondaryTextColor;
+	@include FlexContainer;
+	font-weight: 400;
+	font-size: 12px;
+	line-height: 18px;
+}

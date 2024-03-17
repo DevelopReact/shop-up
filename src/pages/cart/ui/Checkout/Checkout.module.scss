@@ -1,0 +1,36 @@
+@import '@/app/styles/mixins/mixins.scss';
+@import '@/app/styles/variables/backgroundColor.scss';
+@import '@/app/styles/variables/fontColor.scss';
+
+.checkout {
+	width: 40%;
+	padding: 32px 24px;
+	border: 1.5px solid $secondaryBackgroundColor;
+	border-radius: 4px;
+	@include FlexDirection;
+	gap: 24px;
+}
+
+.titleCheckout {
+	width: 100%;
+	font-weight: 500;
+	font-size: 20px;
+	line-height: 28px;
+}
+
+.mainTotalCart {
+	width: 100%;
+	@include FlexDirection(space-between);
+	gap: 24px;
+}
+
+.rowTotalCart {
+	@include FlexContainer(space-between);
+	border-bottom: 1px solid $secondaryBackgroundColor;
+	padding-bottom: 16px;
+}
+
+.rowTotalCart:last-child {
+	border: none !important;
+	padding: 0;
+}

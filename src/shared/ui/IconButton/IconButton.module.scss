@@ -1,0 +1,29 @@
+@import '@/app/styles/mixins/mixins.scss';
+@import '@/app/styles/variables/backgroundColor.scss';
+@import '@/app/styles/variables/fontColor.scss';
+
+.IconButton {
+	@include FlexContainer;
+	cursor: pointer;
+}
+
+.whiteBC {
+	background-color: $mainBackgroundColor;
+
+}
+
+.blackBC {
+	background-color: $secondaryBackgroundColor;
+
+}
+
+.greyBC {
+	background-color: $secondaryAccentColor
+}
+.whiteText {
+	color: $secondaryTextColor
+}
+
+.blackText {
+	color: $secondaryBackgroundColor
+}

@@ -1,0 +1,32 @@
+@import '@/app/styles/variables/backgroundColor.scss';
+@import '@/app/styles/variables/fontColor.scss';
+@import '@/app/styles/mixins/mixins.scss';
+
+.TopHeader {
+	height: 48px;
+	background-color: $secondaryBackgroundColor;
+	@include FlexContainer;
+}
+
+.contentTopHeader {
+	min-width: 81.25%;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 21px;
+	@include FlexContainer;
+	position: relative;
+}
+
+.titleWrapper {
+	@include FlexContainer;
+	gap: 8px;
+}
+
+.titleTopHeader {
+	color: $secondaryTextColor
+}
+
+.select {
+	position: absolute;
+	right: 0;
+}

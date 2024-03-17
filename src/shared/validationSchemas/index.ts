@@ -1,0 +1,9 @@
+export { nameValidationSchema } from './nameSchema';
+export { emailValidationSchema } from './emailSchema';
+export { passwordValidationSchema } from './passwordSchema';
+export { phoneSchema } from './phoneSchema';
+export { messageSchema } from './messageSchema';
+export { cardNumberSchema } from './cardNumberSchema';
+export { dateSchema } from './dateSchema';
+export { securityCodeSchema } from './securityCodeSchema';
+export { postCodeSchema } from './postCodeSchema';

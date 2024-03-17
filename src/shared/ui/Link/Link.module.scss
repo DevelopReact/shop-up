@@ -1,0 +1,49 @@
+@import "@/app/styles/variables/fontColor.scss";
+@import '@/app/styles/mixins/mixins.scss';
+
+.Link {
+}
+
+.whiteTextColor {
+	color: $secondaryTextColor
+}
+
+.blackTextColor {
+	color: $mainTextColor
+}
+
+.accentTextColor {
+	color: $accentTextColor
+}
+
+.textUnderline {
+	text-decoration-line: underline;
+}
+
+.textNoneUnderline {
+	text-decoration-line: none;
+}
+
+.largeFontSize {
+	font-size: 24px;
+}
+
+.mediumFontSize {
+	font-size: 20px;
+}
+
+.smallFontSize {
+	font-size: 16px;
+}
+
+.largeLine {
+	line-height: 28px;
+}
+
+.mediumLine {
+	line-height: 24px;
+}
+
+.smallLine {
+	line-height: 18px;
+}

@@ -1,0 +1,76 @@
+@import '@/app/styles/mixins/mixins.scss';
+@import '@/app/styles/variables/backgroundColor.scss';
+@import '@/app/styles/variables/fontColor.scss';
+
+.headerTodayOffer {
+	@include FlexDirection(flex-start);
+	gap: 24px;
+}
+
+.titleTodayOffer {
+	width: 100%;
+	@include FlexContainer(space-between);
+	gap: 24px;
+	font-family: 'Inter', sans-serif;
+	font-weight: 600;
+	font-size: 36px;
+	line-height: 48px;
+}
+
+.rectangleWrapper {
+	@include FlexContainer;
+	gap: 16px;
+	color: $accentTextColor;
+	font-weight: 600;
+	font-size: 16px;
+	line-height: 20px;
+}
+
+.rectangle {
+	width: 20px;
+	height: 40px;
+	border-radius: 4px;
+	background-color: $accentColor;
+}
+
+.Featured {
+	width: 81.25%;
+}
+
+.wrapperServices {
+	width: 100%;
+	@include FlexContainer;
+	justify-content: space-evenly;
+	padding: 60px 0;
+}
+
+.service {
+	@include FlexDirection;
+	gap: 24px;
+}
+
+.iconService {
+	width: 80px;
+	height: 80px;
+	border: 10px solid silver;
+	border-radius: 50%;
+	background-color: black;
+	@include FlexContainer
+}
+
+.titleService {
+	@include FlexDirection;
+	gap: 8px;
+
+	p {
+		font-weight: 600;
+		font-size: 20px;
+		line-height: 28px;
+	}
+
+	span {
+		font-weight: 400;
+		font-size: 14px;
+		line-height: 21px;
+	}
+}

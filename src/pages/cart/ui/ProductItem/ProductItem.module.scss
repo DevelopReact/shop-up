@@ -1,0 +1,17 @@
+@import '@/app/styles/mixins/mixins.scss';
+@import '@/app/styles/variables/backgroundColor.scss';
+@import '@/app/styles/variables/fontColor.scss';
+
+
+.column {
+	width: 25%;
+	@include FlexContainer;
+	gap: 20px;
+}
+
+.imgProduct {
+	img {
+		width: 54px;
+		height: 54px;
+	}
+}

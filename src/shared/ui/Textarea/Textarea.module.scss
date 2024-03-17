@@ -1,0 +1,32 @@
+@import '@/app/styles/mixins/mixins.scss';
+@import '@/app/styles/variables/backgroundColor.scss';
+@import '@/app/styles/variables/fontColor.scss';
+
+::placeholder {
+	color: rgba(0, 0, 0, .4);
+}
+
+.whiteBC {
+	background-color: $mainBackgroundColor
+}
+
+.greyBC {
+	background-color: $secondaryAccentColor
+}
+
+.whiteColor {
+	color: $secondaryTextColor
+}
+
+.errorTextarea {
+	border: 1px solid $accentColor;
+}
+
+textarea {
+	border-radius: 4px;
+}
+
+textarea+span {
+	font-size: 14px;
+	color: $accentTextColor
+}
