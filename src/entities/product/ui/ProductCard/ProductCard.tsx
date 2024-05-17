@@ -3,16 +3,11 @@ import { FC, ReactNode, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 //api
-import {
-  useGetProductIdMutation,
-  useGetProductsQuery
-} from '../../api/productAPI';
-import {
-  useGetUsersQuery,
-  useUpdateUserMutation
-} from '@/entities/user/api/userAPI';
-//selectors actions user
+import { useGetProductIdMutation } from '../../api/productAPI';
+import { useUpdateUserMutation } from '@/entities/user/api/userAPI';
+//actions
 import { getUserState, userActions } from '@/entities/user';
+import { questActions } from '@/entities/quest';
 //types actions products
 import { IProduct, productActions } from '../..';
 //selectors products
@@ -30,9 +25,6 @@ import WishIcon from '@/shared/libs/assets/svg/WishIcon.svg?react';
 import EyeIcon from '@/shared/libs/assets/svg/EyeIcon.svg?react';
 // styles
 import styles from './ProductCard.module.scss';
-import { IQuest } from '@/entities/quest/model/types/questTypes';
-import { questActions } from '@/entities/quest/model/slice/questSlice';
-import { computedTypesResolver } from '@hookform/resolvers/computed-types';
 
 interface ProductCardProps {
   children: ReactNode;
