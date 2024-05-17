@@ -8,7 +8,7 @@ import {
 } from '@/shared/validationSchemas';
 
 export const signUpValidationSchema = yup.object().shape({
-  name: nameValidationSchema.fields.name,
+  username: nameValidationSchema.fields.name,
   email: emailValidationSchema.fields.email,
   password: passwordValidationSchema.fields.password
 });

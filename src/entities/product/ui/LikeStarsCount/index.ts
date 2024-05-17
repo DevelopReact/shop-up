@@ -1,0 +1,1 @@
+export { LikeStarsCount } from './LikeStarsCount';

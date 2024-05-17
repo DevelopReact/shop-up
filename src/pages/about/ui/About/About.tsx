@@ -1,5 +1,7 @@
 // react
 import { FC } from 'react';
+// enteties
+
 // styles
 import styles from './About.module.scss';
 

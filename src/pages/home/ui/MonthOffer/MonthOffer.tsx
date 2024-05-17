@@ -1,23 +1,36 @@
 // react
-import { FC, useState } from 'react';
+import { FC } from 'react';
+import { useNavigate } from 'react-router';
 //api
-import { jsonProducts } from '@/enteties/product/api/JSON/jsonProducts';
+import { useGetProductsQuery } from '@/entities/product/api/productAPI';
 //ui
 import { Button } from '@/shared/ui/Button';
-import { ProductCard } from '@/enteties/product/ui/ProductCard';
+import { ProductCard } from '@/entities/product/ui/ProductCard';
 import { Discount } from '@/shared/ui/Discount';
-
+import { Loader } from '@/shared/ui/Loader';
+//constants
+import { scrollUp } from '@/shared/libs/constants/scrollUp';
+import { getErrorRoute } from '@/shared/libs/constants/routes';
 // styles
 import styles from './MonthOffer.module.scss';
 
 interface MonthOfferProps {}
 
 export const MonthOffer: FC<MonthOfferProps> = ({}) => {
-  const [visibleBestProduct, setVisibleBestProduct] = useState(
-    jsonProducts.slice(0, 5)
-  );
+  const navigate = useNavigate();
+
+  const { data, isLoading, isError } = useGetProductsQuery();
+
+  const visibleFlashProduct = data?.data
+    .filter((data) => data.attributes.discountPercent)
+    .slice(0, 5);
 
   const onClickMonthOffer = () => {};
+
+  if (isError) {
+    navigate(getErrorRoute());
+    scrollUp();
+  }
 
   return (
     <div className={styles.MonthOffer}>
@@ -45,28 +58,20 @@ export const MonthOffer: FC<MonthOfferProps> = ({}) => {
       </div>
       <div className={styles.wrapperBestProducts}>
         <div className={styles.productBestCards}>
-          {visibleBestProduct?.map(
-            (
-              {
-                imageSrc,
-                titleCard,
-                discount,
-                currentPrice,
-                previousPrice,
-                countLikes
-              },
-              index
-            ) => (
+          {isLoading ? (
+            <Loader />
+          ) : (
+            visibleFlashProduct?.map(({ id, attributes }) => (
               <ProductCard
-                key={index}
-                children={<Discount discount={discount} />}
-                src={imageSrc}
-                titleCard={titleCard}
-                currentPrice={currentPrice}
-                previousPrice={previousPrice}
-                countLikes={countLikes}
+                key={id}
+                children={<Discount discount={attributes.discountPercent} />}
+                src={attributes.mainPicture.data.attributes.url}
+                titleCard={attributes.title}
+                price={attributes.price}
+                discountPercent={attributes.discountPercent}
+                productId={id}
               />
-            )
+            ))
           )}
         </div>
       </div>

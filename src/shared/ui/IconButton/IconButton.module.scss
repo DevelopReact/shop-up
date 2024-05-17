@@ -9,17 +9,21 @@
 
 .whiteBC {
 	background-color: $mainBackgroundColor;
-
 }
 
 .blackBC {
 	background-color: $secondaryBackgroundColor;
-
 }
 
 .greyBC {
 	background-color: $secondaryAccentColor
 }
+
+.accentBC {
+	background-color: $accentColor;
+	border-radius: 50%;
+}
+
 .whiteText {
 	color: $secondaryTextColor
 }

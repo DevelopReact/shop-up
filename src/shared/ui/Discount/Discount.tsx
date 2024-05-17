@@ -4,13 +4,13 @@ import { FC } from 'react';
 import styles from './Discount.module.scss';
 
 interface DiscountProps {
-  discount?: string;
+  discount?: number;
 }
 
 export const Discount: FC<DiscountProps> = ({ discount }) => {
-	if (discount == undefined || !parseInt(discount) || +discount === 0) {
-		return null
-	}
+  if (discount == undefined || discount === 0) {
+    return null;
+  }
   return (
     <div className={styles.Discount}>
       <p>{`-${discount}%`}</p>

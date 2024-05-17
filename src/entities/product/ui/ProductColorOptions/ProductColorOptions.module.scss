@@ -1,0 +1,17 @@
+@import '@/app/styles/mixins/mixins.scss';
+@import '@/app/styles/variables/backgroundColor.scss';
+@import '@/app/styles/variables/fontColor.scss';
+
+.colorButton {
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	cursor: pointer;
+	background-color: var(--button-background);
+	position: relative;
+}
+
+.active {
+	border: 2px solid $mainBackgroundColor;
+	box-shadow: 0 0 0 2px $mainTextColor;
+}

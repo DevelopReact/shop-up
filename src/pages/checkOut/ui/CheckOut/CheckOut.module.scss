@@ -1,0 +1,116 @@
+@import '@/app/styles/mixins/mixins.scss';
+@import '@/app/styles/variables/backgroundColor.scss';
+@import '@/app/styles/variables/fontColor.scss';
+
+.CheckOut {
+	width: 100%;
+	@include FlexDirection;
+	padding-bottom: 100px;
+}
+
+.headerAccount {
+	width: 81.25%;
+	@include FlexContainer(space-between);
+	padding: 100px 0;
+	font-size: 14px;
+	line-height: 21px;
+}
+
+.roadMap {
+	@include FlexContainer;
+
+	p {
+		opacity: 0.5;
+	}
+}
+
+.wrapperCheckOut {
+	position: relative;
+	width: 81.25%;
+	@include FlexContainer(space-between);
+	align-items: start
+	
+}
+
+.billingDetails, .orderDetails{
+	width: 42%;
+}
+
+.formBillingDetails {
+	@include FlexDirection(space-between);
+	gap: 42px;
+}
+
+.title {
+	width: 81.25%;
+	padding-bottom: 50px;
+	font-family: "Inter", sans-serif;
+	font-weight: 500;
+	font-style: normal;
+	font-size: 36px;
+	line-height: 30px;
+}
+
+.inputForm {
+	width: 100%;
+	@include FlexDirection(flex-start);
+	gap: 8px;
+
+	input {
+		height: 50px;
+		width: 100%;
+		padding: 13px 16px;
+	}
+	label {
+		color: rgba(0,0,0,.4)
+	}
+}
+
+.buttonForm {
+	width: 100%;
+	@include FlexContainer(flex-start);
+	gap: 16px;
+
+	button {
+		padding: 0;
+		width: 24px;
+		height: 24px;
+		border-radius: 4px;
+	}
+}
+
+.listCart{
+width: 100%;
+}
+
+.rowTableCart{
+	width: 100%;
+	@include FlexContainer(space-between);
+	border-radius: 4px;
+	padding: 24px 0;
+}
+
+.orderDetails{
+	@include FlexDirection(flex-start);
+	gap: 42px;
+}
+
+.paymentDetails{
+	width: 100%;
+	@include FlexContainer(space-between);
+	align-items:flex-start
+}
+
+.paymentCheckbox{
+	@include FlexDirection(flex-start);
+	gap: 32px;
+}
+
+.payCards{
+	@include FlexContainer;
+	gap:8px;
+}
+
+.buttonPlaceOrder{
+
+}

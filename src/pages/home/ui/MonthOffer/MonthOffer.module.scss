@@ -44,5 +44,6 @@
 
 .productBestCards {
 	width: 100%;
-	@include FlexContainer(space-between);
+	@include FlexContainer(start);
+	column-gap: 5%;
 }

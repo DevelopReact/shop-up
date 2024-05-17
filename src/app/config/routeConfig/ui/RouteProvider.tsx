@@ -1,21 +1,21 @@
 // react
 import { FC } from 'react';
 import { Route, Routes } from 'react-router-dom';
-//pages
+//ui
 import { Home } from '@/pages/home';
 import { SignUp } from '@/pages/signUp';
 import { LogIn } from '@/pages/logIn';
 import { WishList } from '@/pages/wishList';
 import { Account } from '@/pages/account';
 import { Cart } from '@/pages/cart';
-import { CheckOut } from '@/pages/checkOut';
 import { About } from '@/pages/about';
 import { Contact } from '@/pages/contact';
 import { Error } from '@/pages/error';
-import { ProductDetails } from '@/pages/productDetails';
 import { Profile } from '@/pages/account/ui/profile';
 import { AddressBook } from '@/pages/account/ui/AddressBook';
 import { PaymentOptions } from '@/pages/account/ui/PaymentOptions';
+import { CheckOut } from '@/pages/checkOut/ui';
+import { ProductDetails } from '@/entities/product/ui/ProductDetails';
 //routes
 import {
   getAboutRoute,

@@ -1,30 +1,52 @@
 // react
 import { FC } from 'react';
+//classnames lib
+import classNames from 'classnames';
+//shared constant
+import { jsonPlaceholderRootURL } from '@/shared/libs/constants/jsonPlaceholderBaseURL';
 // styles
 import styles from './ProductItem.module.scss';
 
 interface ProductItemProps {
   imageSrc: string;
   titleCard: string;
-  currentPrice: string;
+  price: number;
+  discountPercent: number;
+  columnStyle: 'columnEnd' | 'columnCenter';
 }
 
 export const ProductItem: FC<ProductItemProps> = ({
   imageSrc,
   titleCard,
-  currentPrice
+  price,
+  discountPercent,
+  columnStyle
 }) => {
+  const priceWithDiscount = Math.round(price - (price * discountPercent) / 100);
+
   return (
     <>
-      <div className={styles.column}>
+      <div
+        className={classNames(styles.column, {
+          [styles.columnEnd]: columnStyle === 'columnEnd',
+          [styles.columnCenter]: columnStyle === 'columnCenter'
+        })}
+      >
         <div className={styles.imgProduct}>
-          <img src={imageSrc} />
+          <img src={`${jsonPlaceholderRootURL}${imageSrc}`} alt={titleCard} />
         </div>
         <div className={styles.titleProduct}>
           <span>{titleCard}</span>
         </div>
       </div>
-      <div className={styles.column}>${currentPrice}</div>
+      <div
+        className={classNames(styles.column, {
+          [styles.columnEnd]: columnStyle === 'columnEnd',
+          [styles.columnCenter]: columnStyle === 'columnCenter'
+        })}
+      >
+        ${discountPercent ? priceWithDiscount : price}
+      </div>
     </>
   );
 };

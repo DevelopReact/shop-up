@@ -13,10 +13,14 @@ import {
 } from '@/shared/libs/constants/routes';
 // styles
 import styles from './Account.module.scss';
+import { useSelector } from 'react-redux';
+import { getUserState } from '@/entities/user';
 
 interface AccountProps {}
 
 export const Account: FC<AccountProps> = ({}) => {
+  const data = useSelector(getUserState);
+
   return (
     <div className={styles.Account}>
       <div className={styles.headerAccount}>
@@ -26,7 +30,7 @@ export const Account: FC<AccountProps> = ({}) => {
         </div>
         <div className={styles.welcome}>
           <p>Welcome!&nbsp;</p>
-          <span>Md Rimel</span>
+          <span>{data?.user.username}</span>
         </div>
       </div>
       <div className={styles.mainAccount}>

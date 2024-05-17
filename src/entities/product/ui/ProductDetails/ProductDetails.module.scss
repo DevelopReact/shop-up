@@ -1,0 +1,158 @@
+@import '@/app/styles/mixins/mixins.scss';
+@import '@/app/styles/variables/backgroundColor.scss';
+@import '@/app/styles/variables/fontColor.scss';
+
+.ProductDetails {
+	@include FlexDirection;
+}
+
+.headerContact {
+	width: 81.25%;
+	@include FlexContainer(space-between);
+	padding: 100px 0;
+	font-size: 14px;
+	line-height: 21px;
+}
+
+.roadMap {
+	@include FlexContainer;
+
+	p {
+		opacity: 0.5;
+	}
+}
+
+.mainProductDetails {
+	width: 81.25%;
+	@include FlexContainer(space-between);
+}
+
+.productPictures {
+	width: 45%;
+	@include FlexContainer;
+	gap: 30px;
+}
+
+.mainPicture {
+	@include FlexContainer;
+	width: 500px;
+	height: 600px;
+	position: relative;
+	background-color: $secondaryAccentColor;
+
+	img {
+		width: 75%;
+		height: 85%;
+		object-fit: cover;
+	}
+}
+
+.minorPictures {
+	height: 600px;
+	@include FlexDirection;
+	justify-content: start;
+	gap: 20px;
+}
+
+.picture {
+	@include FlexContainer;
+	width: 170px;
+	height: 138px;
+	background-color: $secondaryAccentColor;
+
+	img {
+		width: 50%;
+		height: 85%;
+		object-fit: cover;
+	}
+}
+
+.productOptions {
+	width: 45%;
+	@include FlexDirection(start);
+	justify-content: space-between
+}
+
+.productData {
+	padding: 20px 0;
+	@include FlexDirection(start);
+	gap: 20px;
+	border-bottom: 1px solid $mainOpacityColor
+}
+
+.productTitle {
+	h1 {
+		font-weight: 600;
+		font-size: 24px;
+		line-height: 24px;
+		letter-spacing: 3%;
+	}
+}
+
+.productLikes {
+	@include FlexContainer;
+	gap: 16px;
+
+	span {
+		color: $mainOpacityColor
+	}
+
+	p {
+		color: #00FF66;
+	}
+}
+
+.productPrice {
+
+	h2 {
+		font-weight: 400;
+		font-size: 24px;
+		line-height: 24px;
+		letter-spacing: 3%;
+	}
+}
+
+.productVarietyChoice {
+	width: 100%;
+	padding: 30px 0;
+	@include FlexDirection(space-between);
+	gap: 30px;
+}
+
+.productSizes,
+.productColors {
+	@include FlexContainer(start);
+	gap: 16px;
+}
+
+.delivery {
+	width: 100%;
+	border: 1px solid $mainOpacityColor;
+	border-radius: 4px;
+}
+
+.freeDelivery,
+.returnDelivery {
+	width: 100%;
+	padding: 16px;
+	@include FlexContainer(start);
+	gap: 16px;
+}
+
+.freeDelivery {
+	border-bottom: 1px solid $mainOpacityColor;
+}
+
+.titleDelivery {
+	p {
+		font-weight: 500;
+		font-size: 16px;
+		line-height: 24px;
+	}
+
+	span {
+		font-weight: 500;
+		font-size: 12px;
+		line-height: 18px;
+	}
+}

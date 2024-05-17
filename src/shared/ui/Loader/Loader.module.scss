@@ -1,0 +1,8 @@
+@import "@/app/styles/variables/fontColor.scss";
+@import '@/app/styles/mixins/mixins.scss';
+
+.Loader{
+	width: 25%;
+	@include FlexContainer;
+	color: $accentTextColor
+}

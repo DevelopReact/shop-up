@@ -1,0 +1,21 @@
+@import '@/app/styles/mixins/mixins.scss';
+@import '@/app/styles/variables/backgroundColor.scss';
+@import '@/app/styles/variables/fontColor.scss';
+
+.sizeButton {
+	width: 41px;
+	height: 41px;
+	border: 1px solid $mainOpacityColor;
+	border-radius: 4px;
+	@include FlexContainer;
+	cursor: pointer;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 24px;
+	background-color: $mainBackgroundColor
+}
+
+.active {
+	background-color: $accentColor;
+	color: $secondaryAccentColor
+}

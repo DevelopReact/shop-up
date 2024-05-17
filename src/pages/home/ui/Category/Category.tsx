@@ -1,10 +1,10 @@
 // react
-import { FC, useState } from 'react';
+import { FC } from 'react';
 //api
-import { categoryJSON } from '@/enteties/product/api/JSON/categoryJSON';
+import { useGetCategoriesQuery } from '@/entities/product/api/productAPI';
 //ui
 import { IconButton } from '@/shared/ui/IconButton';
-import { CategoryButton } from '@/enteties/product/ui/CategoryButton';
+import { CategoryButton } from '@/entities/product/ui/CategoryButton';
 //libs
 import VectorRightBlack from '@/shared/libs/assets/svg/VectorRightBlack.svg?react';
 import VectorLeftBlack from '@/shared/libs/assets/svg/VectorLeftBlack.svg?react';
@@ -14,9 +14,7 @@ import styles from './Category.module.scss';
 interface CategoryProps {}
 
 export const Category: FC<CategoryProps> = ({}) => {
-  const [visibleButtons, setVisibleButtons] = useState(
-    categoryJSON.slice(0, 8)
-  );
+  const { data } = useGetCategoriesQuery();
 
   return (
     <div className={styles.Category}>
@@ -40,11 +38,13 @@ export const Category: FC<CategoryProps> = ({}) => {
         </div>
       </div>
       <div className={styles.categoryButtons}>
-        {visibleButtons?.map(({ category, picture }, index) => (
+        {data?.data.map(({ id, attributes }) => (
           <CategoryButton
-            title={category}
-            picture={picture}
-            key={index}
+            title={attributes.title}
+            icon={attributes.icon.data
+              .map(({ attributes }) => attributes.url)
+              .join()}
+            key={id}
           ></CategoryButton>
         ))}
       </div>

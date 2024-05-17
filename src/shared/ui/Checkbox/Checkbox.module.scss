@@ -11,7 +11,7 @@
 	cursor: pointer;
 }
 
-.accent {
+.accentBG {
 	width: 24px;
 	height: 24px;
 	background-color: $accentColor;
@@ -19,6 +19,20 @@
 
 	&:checked {
 		background-image: url('@/shared/libs/assets/svg/Check.svg');
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+}
+
+.whiteBG{
+	width: 24px;
+	height: 24px;
+	background-color: $mainBackgroundColor;
+	border: 1.5px solid $secondaryBackgroundColor;
+	border-radius: 50%;
+
+	&:checked {
+		background-image: url('@/shared/libs/assets/svg/RadioButton.svg');
 		background-repeat: no-repeat;
 		background-position: center;
 	}

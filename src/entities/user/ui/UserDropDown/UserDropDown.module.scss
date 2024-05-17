@@ -1,0 +1,29 @@
+@import '@/app/styles/variables/backgroundColor.scss';
+@import '@/app/styles/variables/fontColor.scss';
+@import '@/app/styles/mixins/mixins.scss';
+
+.UserDropDown{
+	position: absolute;
+	top:130px;
+	right: 9%;
+	z-index: 10;
+	padding: 18px 20px;
+	@include FlexDirection(flex-start);
+	gap: 13px;
+	background-color: rgba(0, 0, 0, 0.4);
+	backdrop-filter: blur(5px);
+	color: $secondaryTextColor;
+	border-radius: 4px;
+}
+
+.linkDropDown{
+	width: 100%;
+	@include FlexContainer(flex-start);
+	gap: 16px;
+}
+
+.linkDropDown>a {
+	&:hover {
+		text-decoration: underline;
+	}
+}

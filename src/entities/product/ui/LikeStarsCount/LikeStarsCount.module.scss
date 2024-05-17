@@ -1,0 +1,20 @@
+@import '@/app/styles/mixins/mixins.scss';
+@import '@/app/styles/variables/backgroundColor.scss';
+@import '@/app/styles/variables/fontColor.scss';
+
+.LikeStarsCount {
+	@include FlexContainer(flex-start);
+	gap: 8px;
+
+	.stars {
+		@include FlexContainer(flex-start);
+		gap: 4px;
+	}
+
+	span {
+		font-weight: 600;
+		font-size: 14px;
+		line-height: 21px;
+		color: $mainOpacityColor;
+	}
+}

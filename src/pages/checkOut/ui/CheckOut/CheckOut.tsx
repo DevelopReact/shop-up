@@ -1,10 +1,191 @@
 // react
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import { useForm } from 'react-hook-form';
+//lib
+import { yupResolver } from '@hookform/resolvers/yup';
+//api
+import { useGetProductsQuery } from '@/entities/product/api/productAPI';
+//ui
+import { Input } from '@/shared/ui/Input';
+import { Button } from '@/shared/ui/Button';
+import { ProductItem } from '@/pages/cart/ui/ProductItem';
+import { CartTotal } from '@/pages/cart/ui/CartTotal';
+import { Checkbox } from '@/shared/ui/Checkbox';
+import { Loader } from '@/shared/ui/Loader';
+//assets
+import Check from '@/shared/libs/assets/svg/Check.svg?react';
+import Bkash from '@/shared/libs/assets/png/Bkash.png';
+import Visa from '@/shared/libs/assets/png/Visa.png';
+import Nagad from '@/shared/libs/assets/png/Nagad.png';
+import Mastercard from '@/shared/libs/assets/png/Mastercard.png';
+//validationSchemas
+import { checkOutSchema } from './libs/validationSchemas/checkOutSchema';
 // styles
 import styles from './CheckOut.module.scss';
 
 interface CheckOutProps {}
 
 export const CheckOut: FC<CheckOutProps> = ({}) => {
-  return <div className={styles.CheckOut}>CheckOut</div>;
+  const { data, isLoading, isError } = useGetProductsQuery();
+  const [isChecked, setIsChecked] = useState(false);
+
+  const onChange = () => {
+    setIsChecked(!isChecked);
+  };
+
+  const { formState, register, handleSubmit, reset } = useForm({
+    mode: 'onChange',
+    resolver: yupResolver(checkOutSchema)
+  });
+
+  const onSubmit = handleSubmit((values) => {
+    console.log(values);
+
+    reset();
+  });
+
+  return (
+    <div className={styles.CheckOut}>
+      <div className={styles.headerAccount}>
+        <div className={styles.roadMap}>
+          <p>
+            Account My&nbsp;/&nbsp;Account&nbsp;/&nbsp;Product
+            View&nbsp;/&nbsp;Cart&nbsp;/&nbsp;
+          </p>
+          <span>CheckOut</span>
+        </div>
+      </div>
+      <div className={styles.title}>
+        <p>Billing Details</p>
+      </div>
+      <div className={styles.wrapperCheckOut}>
+        <div className={styles.billingDetails}>
+          <form className={styles.formBillingDetails} onSubmit={onSubmit}>
+            <div className={styles.inputForm}>
+              <Input
+                type='text'
+                backgroundColor='grey'
+                register={register('firstName')}
+                error={formState.errors.firstName}
+                label='First Name*'
+              />
+            </div>
+            <div className={styles.inputForm}>
+              <Input
+                type='text'
+                backgroundColor='grey'
+                register={register('companyName')}
+                error={formState.errors.companyName}
+                label='Company Name'
+              />
+            </div>
+            <div className={styles.inputForm}>
+              <Input
+                type='text'
+                backgroundColor='grey'
+                register={register('streetAddress')}
+                error={formState.errors.streetAddress}
+                label='Street Address*'
+              />
+            </div>
+            <div className={styles.inputForm}>
+              <Input
+                type='text'
+                backgroundColor='grey'
+                register={register('apartment')}
+                error={formState.errors.apartment}
+                label='Apartment, floor, etc. (optional)'
+              />
+            </div>
+            <div className={styles.inputForm}>
+              <Input
+                type='text'
+                backgroundColor='grey'
+                register={register('town')}
+                error={formState.errors.town}
+                label='Town/City*'
+              />
+            </div>
+            <div className={styles.inputForm}>
+              <Input
+                type='tel'
+                backgroundColor='grey'
+                register={register('phone')}
+                error={formState.errors.phone}
+                label='Phone Number*'
+              />
+            </div>
+            <div className={styles.inputForm}>
+              <Input
+                type='email'
+                backgroundColor='grey'
+                register={register('email')}
+                error={formState.errors.email}
+                label='Email Address*'
+              />
+            </div>
+            <div className={styles.buttonForm}>
+              <Button
+                type='submit'
+                backgroundColor='accent'
+                textColor='white'
+                height='large'
+                disabled={!formState.isValid}
+              >
+                <Check />
+              </Button>
+              <span>Save this information for faster check-out next time</span>
+            </div>
+          </form>
+        </div>
+        <div className={styles.orderDetails}>
+          <div className={styles.listCart}>
+            {data?.data.map(({ id, attributes }) => {
+              return isLoading ? (
+                <Loader />
+              ) : (
+                <div className={styles.rowTableCart} key={id}>
+                  <ProductItem
+                    imageSrc={attributes.mainPicture.data.attributes.url}
+                    titleCard={attributes.title}
+                    price={attributes.price}
+                    discountPercent={attributes.discountPercent}
+                    columnStyle='columnEnd'
+                  />
+                </div>
+              );
+            })}
+          </div>
+          <CartTotal />
+          <div className={styles.paymentDetails}>
+            <div className={styles.paymentCheckbox}>
+              <Checkbox
+                label='Bank'
+                backgroundStyle='white'
+                onChange={onChange}
+                checked={isChecked}
+              />
+              <Checkbox
+                label='Cash on delivery'
+                backgroundStyle='white'
+                onChange={onChange}
+                checked={!isChecked}
+              />
+            </div>
+            <div className={styles.payCards}>
+              <img src={Bkash} />
+              <img src={Visa} />
+              <img src={Mastercard} />
+              <img src={Nagad} />
+            </div>
+          </div>
+          <div className={styles.buttonPlaceOrder}>
+            <Button type='button' backgroundColor='accent' textColor='white'>
+              Place Order
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };

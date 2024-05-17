@@ -1,17 +1,27 @@
 // react
 import { FC } from 'react';
+import { useNavigate } from 'react-router';
 //ui
-import { CartClearButton } from '../CartClearButton/CartClearButton';
-import { Coupon } from '../Coupon/Coupon';
-import { ProductsList } from '..//ProductsList/ProductsList';
+import { CartClearButton } from '../CartClearButton';
+import { Coupon } from '../Coupon';
+import { ProductsList } from '../ProductsList';
 import { Button } from '@/shared/ui/Button';
+import { CartTotal } from '../CartTotal';
+//libs
+import { getCheckOutRoute } from '@/shared/libs/constants/routes';
 // styles
 import styles from './Cart.module.scss';
-import { Checkout } from '../Checkout/Checkout';
 
 interface CartProps {}
 
 export const Cart: FC<CartProps> = ({}) => {
+  const navigate = useNavigate();
+
+  const onNavigateToCheckOut = () => {
+    navigate(`${getCheckOutRoute()}`);
+    window.scrollTo(0, 0);
+  };
+
   const onNavigateToShop = () => {};
 
   return (
@@ -47,7 +57,23 @@ export const Cart: FC<CartProps> = ({}) => {
       </div>
       <div className={styles.footerCart}>
         <Coupon />
-        <Checkout />
+        <div className={styles.CartTotal}>
+          <div className={styles.titleCartTotal}>
+            <p>Cart Total</p>
+          </div>
+          <CartTotal />
+          <div className={styles.buttonTotalCart}>
+            <Button
+              type='button'
+              backgroundColor='accent'
+              textColor='white'
+              height='large'
+              onClick={onNavigateToCheckOut}
+            >
+              Process to checkout
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   );

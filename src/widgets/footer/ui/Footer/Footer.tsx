@@ -5,14 +5,15 @@ import { Logo } from '@/shared/ui/Logo';
 import { Link } from '@/shared/ui/Link';
 import { Input } from '@/shared/ui/Input';
 import { IconButton } from '@/shared/ui/IconButton';
-//libs
+//assets
+import QrCode from '@/shared/libs/assets/png/QrCode.png';
+import GooglePlay from '@/shared/libs/assets/png/google-play-logo.png';
+import AppStore from '@/shared/libs/assets/png/download-appstore.png';
 import Vector from '@/shared/libs/assets/svg/Vector.svg?react';
-import QrCode from '@/shared/libs/assets/svg/QrCode.svg?react';
 import Facebook from '@/shared/libs/assets/svg/Facebook.svg?react';
 import Twitter from '@/shared/libs/assets/svg/Twitter.svg?react';
 import Instagram from '@/shared/libs/assets/svg/Instagram.svg?react';
 import LinkedIn from '@/shared/libs/assets/svg/LinkedIn.svg?react';
-import GooglePlay from '@/shared/libs/assets/svg/GooglePlay.svg?react';
 import Group from '@/shared/libs/assets/svg/Group.svg?react';
 import {
   getAccountRoute,
@@ -34,7 +35,6 @@ import styles from './Footer.module.scss';
 interface FooterProps {}
 
 export const Footer: FC<FooterProps> = ({}) => {
-  const onChangeInputEmail = () => {};
   const onChangeSocialIcon = () => {};
   const onScrollUp = () => scrollUp();
 
@@ -69,7 +69,6 @@ export const Footer: FC<FooterProps> = ({}) => {
               placeholder='Enter your email'
               backgroundColor='black'
               textColor='white'
-              onChange={onChangeInputEmail}
             />
             <Vector />
           </div>
@@ -103,7 +102,12 @@ export const Footer: FC<FooterProps> = ({}) => {
           >
             Login / Register
           </Link>
-          <Link to={getCartRoute()} textColor='white' textDecoration='none'>
+          <Link
+            to={getCartRoute()}
+            textColor='white'
+            textDecoration='none'
+            onClick={onScrollUp}
+          >
             Cart
           </Link>
           <Link
@@ -114,7 +118,12 @@ export const Footer: FC<FooterProps> = ({}) => {
           >
             Wishlist
           </Link>
-          <Link to={getShop()} textColor='white' textDecoration='none'>
+          <Link
+            to={getShop()}
+            textColor='white'
+            textDecoration='none'
+            onClick={onScrollUp}
+          >
             Shop
           </Link>
         </div>
@@ -158,8 +167,11 @@ export const Footer: FC<FooterProps> = ({}) => {
           <div className={styles.downloadAppColumn}>
             <span>Save $3 with App New User Only</span>
             <div className={styles.qrCode}>
-              <QrCode />
-              <GooglePlay />
+              <img src={QrCode} />
+              <div className={styles.app}>
+                <img src={GooglePlay} />
+                <img src={AppStore} />
+              </div>
             </div>
           </div>
           <div className={styles.socialIcons}>

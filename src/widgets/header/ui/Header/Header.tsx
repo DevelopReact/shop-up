@@ -11,8 +11,8 @@ interface HeaderProps {}
 export const Header: FC<HeaderProps> = ({}) => {
   return (
     <div className={styles.Header}>
-		  <TopHeader />
-		  <HeaderNavMenu/>
+      <TopHeader />
+      <HeaderNavMenu />
     </div>
   );
 };

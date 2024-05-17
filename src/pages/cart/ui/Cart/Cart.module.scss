@@ -100,3 +100,19 @@
 	align-items:flex-start;
 	padding: 100px 0;
 }
+
+.CartTotal {
+	width: 40%;
+	padding: 32px 24px;
+	border: 1.5px solid $secondaryBackgroundColor;
+	border-radius: 4px;
+	@include FlexDirection;
+	gap: 24px;
+}
+
+.titleCartTotal {
+	width: 100%;
+	font-weight: 500;
+	font-size: 20px;
+	line-height: 28px;
+}

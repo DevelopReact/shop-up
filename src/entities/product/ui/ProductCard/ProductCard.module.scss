@@ -1,0 +1,99 @@
+@import '@/app/styles/mixins/mixins.scss';
+@import '@/app/styles/variables/backgroundColor.scss';
+@import '@/app/styles/variables/fontColor.scss';
+
+.ProductCard {
+	width: 270px;
+	height: 350px;
+	@include FlexDirection(flex-start);
+	gap: 16px;
+}
+
+.card {
+	position: relative;
+	width: 100%;
+	height: 250px;
+	background-color: $secondaryAccentColor;
+	@include FlexContainer;
+
+	button {
+		width: 100%;
+		height: 41px;
+		position: absolute;
+		bottom: 0;
+		font-weight: 500;
+		font-size: 16px;
+		line-height: 24px;
+	}
+}
+
+.mainCard{
+	cursor: pointer;
+}
+
+.titleCard {
+	cursor: pointer;
+	@include FlexDirection(flex-start);
+	gap: 8px;
+
+	.describeCard {
+		font-weight: 500;
+		font-size: 16px;
+		line-height: 24px;
+	}
+
+	a{
+		text-decoration: none;
+		color: $mainTextColor
+	}
+}
+
+.iconsWrapper {
+	position: absolute;
+	right: 12px;
+	top: 12px;
+	@include FlexDirection;
+	gap: 8px;
+}
+
+.iconCard {
+	width: 34px;
+	height: 34px;
+	border-radius: 50%;
+	background-color: $mainBackgroundColor;
+	@include FlexContainer;
+}
+
+.price {
+	@include FlexContainer(flex-start);
+	gap: 12px;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 24px;
+
+	.currentPrice {
+		color: $accentTextColor
+	}
+
+	.previousPrice {
+		color: $mainOpacityColor;
+		text-decoration: line-through;
+	}
+}
+
+.assessment {
+	@include FlexContainer(flex-start);
+	gap: 8px;
+
+	.stars {
+		@include FlexContainer(flex-start);
+		gap: 4px;
+	}
+
+	span {
+		font-weight: 600;
+		font-size: 14px;
+		line-height: 21px;
+		color: $mainOpacityColor;
+	}
+}

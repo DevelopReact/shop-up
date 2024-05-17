@@ -35,16 +35,21 @@
 	padding: 12px 16px;
 	border: 1.5px solid $secondaryTextColor;
 	border-radius: 4px;
-	@include FlexContainer
-}
+	@include FlexContainer;
 
-::placeholder {
-	color: rgba(250, 250, 250, .4)
+	::placeholder {
+		color: rgba(250, 250, 250, .4)
+	}
 }
 
 .qrCode {
 	display: flex;
 	gap: 8px;
+}
+
+.app{
+	@include FlexDirection;
+	justify-content: space-between;
 }
 
 .socialIcons {

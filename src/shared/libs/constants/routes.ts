@@ -1,30 +1,23 @@
 import { routeConfig } from '@/app/config/routeConfig';
 
 export const getHomeRoute = () => routeConfig.home;
-
 export const getSignInRoute = () => routeConfig.signIn;
-
 export const getLogInRoute = () => routeConfig.logIn;
-
 export const getWishListRoute = () => routeConfig.wishList;
-
 export const getAccountRoute = () => routeConfig.account;
 export const getProfile = () => routeConfig.profile;
+export const getMyOrders = () => routeConfig.myOrders;
 export const getAddressBook = () => routeConfig.addressBook;
 export const getPaymentOptions = () => routeConfig.paymentOptions;
 export const getReturns = () => routeConfig.returns;
 export const getCancellations = () => routeConfig.cancellations;
-
+export const getReviews = () => routeConfig.reviews;
 export const getCartRoute = () => routeConfig.cart;
-
 export const getCheckOutRoute = () => routeConfig.checkOut;
-
 export const getContactRoute = () => routeConfig.contact;
-
 export const getAboutRoute = () => routeConfig.about;
-
 export const getErrorRoute = () => routeConfig.error;
-
+export const getProductsRoute = () => routeConfig.productList;
 export const getProductDetailsRoute = () => routeConfig.productDetails;
 export const getShop = () => routeConfig.shop;
 export const getWomansFashion = () => routeConfig.womansFashion;

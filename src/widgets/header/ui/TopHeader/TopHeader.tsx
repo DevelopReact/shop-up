@@ -28,7 +28,7 @@ export const TopHeader: FC<TopHeaderProps> = ({}) => {
           />
         </div>
         <div className={styles.select}>
-          <Select children='English' />
+          <Select />
         </div>
       </div>
     </div>

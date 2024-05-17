@@ -100,7 +100,9 @@
 	position: absolute;
 	width: 90.6%;
 	right: 0;
-	@include FlexContainer(space-between);
+	@include FlexContainer(start);
+	column-gap: 5%;
+	overflow: hidden;
 }
 
 .navButton {

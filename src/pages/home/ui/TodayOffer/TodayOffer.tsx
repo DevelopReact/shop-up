@@ -1,35 +1,64 @@
 // react
 import { FC, useState } from 'react';
+import { useNavigate } from 'react-router';
 //api
-import { jsonProducts } from '@/enteties/product/api/JSON/jsonProducts';
+import { useGetProductsQuery } from '@/entities/product/api/productAPI';
+//types
+import { IProduct } from '@/entities/product/model/types/productTypes';
 //ui
 import { Timer } from '../Timer';
 import { IconButton } from '@/shared/ui/IconButton';
+import { Discount } from '@/shared/ui/Discount';
+import { ProductCard } from '@/entities/product/ui/ProductCard';
+import { Button } from '@/shared/ui/Button';
+import { Loader } from '@/shared/ui/Loader';
+//assets
 import VectorRightBlack from '@/shared/libs/assets/svg/VectorRightBlack.svg?react';
 import VectorLeftBlack from '@/shared/libs/assets/svg/VectorLeftBlack.svg?react';
-import { Discount } from '@/shared/ui/Discount';
-import { ProductCard } from '@/enteties/product/ui/ProductCard';
-import { Button } from '@/shared/ui/Button';
-//libs
-import { getAllProducts } from '@/shared/libs/constants/routes';
+//constants
+import { getAllProducts, getErrorRoute } from '@/shared/libs/constants/routes';
 import { scrollUp } from '@/shared/libs/constants/scrollUp';
 // styles
 import styles from './TodayOffer.module.scss';
-import { useNavigate } from 'react-router';
 
 interface TodayOfferProps {}
 
 export const TodayOffer: FC<TodayOfferProps> = ({}) => {
   const navigate = useNavigate();
 
-  const [visibleFlashProduct, setVisibleFlashProduct] = useState(
-    jsonProducts.slice(0, 6)
-  );
+  const { data, isLoading, isError } = useGetProductsQuery();
+
+  const visibleFlashProduct = data?.data
+    .slice(0, 7)
+    .filter((data: IProduct) => data.attributes.discountPercent);
+
+  const [startVisibleIndex, setStartVisibleIndex] = useState(0);
+  //move list left on click
+  const onClickMoveListLeft = () => {
+    if (visibleFlashProduct) {
+      setStartVisibleIndex((prevIndex) =>
+        prevIndex === visibleFlashProduct.length - 1 ? 0 : prevIndex + 1
+      );
+    }
+  };
+  //move list right on click
+  const onClickMoveListRight = () => {
+    if (visibleFlashProduct) {
+      setStartVisibleIndex((prevIndex) =>
+        prevIndex === 0 ? visibleFlashProduct.length - 1 : prevIndex - 1
+      );
+    }
+  };
 
   const onNavigate = () => {
     navigate(getAllProducts());
     scrollUp();
   };
+
+  if (isError) {
+    navigate(getErrorRoute());
+    scrollUp();
+  }
 
   return (
     <>
@@ -48,10 +77,10 @@ export const TodayOffer: FC<TodayOfferProps> = ({}) => {
             </div>
 
             <div className={styles.arrowSlider}>
-              <IconButton backgroundColor='grey'>
+              <IconButton backgroundColor='grey' onClick={onClickMoveListRight}>
                 <VectorLeftBlack />
               </IconButton>
-              <IconButton backgroundColor='grey'>
+              <IconButton backgroundColor='grey' onClick={onClickMoveListLeft}>
                 <VectorRightBlack />
               </IconButton>
             </div>
@@ -60,28 +89,41 @@ export const TodayOffer: FC<TodayOfferProps> = ({}) => {
       </div>
       <div className={styles.wrapperProductCards}>
         <div className={styles.productCards}>
-          {visibleFlashProduct?.map(
-            (
-              {
-                imageSrc,
-                titleCard,
-                discount,
-                currentPrice,
-                previousPrice,
-                countLikes
-              },
-              index
-            ) => (
-              <ProductCard
-                key={index}
-                children={<Discount discount={discount} />}
-                src={imageSrc}
-                titleCard={titleCard}
-                currentPrice={currentPrice}
-                previousPrice={previousPrice}
-                countLikes={countLikes}
-              />
-            )
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <>
+              {visibleFlashProduct
+                ?.slice(startVisibleIndex)
+                .map(({ attributes, id }) => (
+                  <ProductCard
+                    key={id}
+                    children={
+                      <Discount discount={attributes.discountPercent} />
+                    }
+                    src={attributes.mainPicture.data.attributes.url}
+                    titleCard={attributes.title}
+                    price={attributes.price}
+                    discountPercent={attributes.discountPercent}
+                    productId={id}
+                  />
+                ))}
+              {visibleFlashProduct
+                ?.slice(0, startVisibleIndex)
+                .map(({ attributes, id }) => (
+                  <ProductCard
+                    key={id}
+                    children={
+                      <Discount discount={attributes.discountPercent} />
+                    }
+                    src={attributes.mainPicture.data.attributes.url}
+                    titleCard={attributes.title}
+                    price={attributes.price}
+                    discountPercent={attributes.discountPercent}
+                    productId={id}
+                  />
+                ))}
+            </>
           )}
         </div>
       </div>
