@@ -73,8 +73,8 @@ export const ProductCard: FC<ProductCardProps> = ({
   };
   //click add product to cart
   const onClickAddToCart = async (productId: number) => {
-    const productData = await getProductId(productId);
-    const newProduct: IProduct = productData.data.data;
+    const productData = await getProductId(productId).unwrap();
+    const newProduct: IProduct = productData.data;
 
     dispatch(productActions.setProductCart(newProduct));
 

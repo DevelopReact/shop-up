@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 //api
 import { useUpdateUserMutation } from '@/entities/user/api/userAPI';
 //actions
-import { productActions } from '@/entities/product';
+import { IProduct, productActions } from '@/entities/product';
 import { questActions } from '@/entities/quest';
 //selectors
 import { getUserState, userActions } from '@/entities/user';
@@ -17,6 +17,7 @@ import ArrowDown from '@/shared/libs/assets/svg/ArrowDown.svg?react';
 import CancelIcon from '@/shared/libs/assets/svg/icon-cancel.svg?react';
 // styles
 import styles from './CartItem.module.scss';
+import { useGetProductIdMutation } from '@/entities/product/api/productAPI';
 
 interface CartItemProps {}
 
@@ -27,6 +28,7 @@ export const CartItem: FC<CartItemProps> = ({}) => {
   const { quest } = useSelector(getQuestState);
 
   const [updateUser] = useUpdateUserMutation();
+  const [getProductId] = useGetProductIdMutation();
 
   const [showCancelButton, setShowCancelButton] = useState<number | null>(null);
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
@@ -42,9 +44,35 @@ export const CartItem: FC<CartItemProps> = ({}) => {
     return quantities[productId] || 1;
   };
 
-  const onIncreaseQuantity = (productId: number) => {
+  const onIncreaseQuantity = async (productId: number) => {
     const newQuantity = getQuantity(productId) + 1;
     updateQuantity(productId, newQuantity);
+
+    const productData = await getProductId(productId).unwrap();
+    const currentProduct: IProduct = productData.data;
+
+    const productWithQuantity = {
+      ...currentProduct,
+      attributes: {
+        ...currentProduct.attributes,
+        quantity: newQuantity
+      }
+    };
+
+    if (isLoggedIn) {
+      const updatedUserData = {
+        ...user,
+        products: user.products?.map((product) => {
+          product.id === productId ? productWithQuantity : product;
+        })
+      };
+
+      console.log(updatedUserData);
+
+      // await updateUser(updatedUserData)
+      //   .unwrap()
+      //   .then((data) => console.log(data));
+    }
   };
 
   const onDecreaseQuantity = (productId: number) => {

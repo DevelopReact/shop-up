@@ -64,6 +64,7 @@ export interface IProduct {
         attributes: {};
       };
     };
+    quantity?: number;
   };
 }
 
