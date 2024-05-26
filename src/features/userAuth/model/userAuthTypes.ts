@@ -1,14 +1,4 @@
-export interface IUserAuth {
-  id: number;
-  username: string;
-  email: string;
-  provider?: string;
-  confirmed?: boolean;
-  blocked?: boolean;
-  createdAt?: string;
-  updatedAt?: string;
-}
-
+import { IUser } from '@/entities/user/model/types/userTypes';
 export interface IPostUserSignUpRequest {
   username: string;
   email: string;
@@ -23,5 +13,5 @@ export interface IPostUserLogInRequest {
 
 export interface IPostUserResponse {
   jwt: string;
-  user: IUserAuth;
+  user: IUser;
 }

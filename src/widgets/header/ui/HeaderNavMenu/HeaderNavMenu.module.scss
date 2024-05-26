@@ -34,3 +34,16 @@
 	@include FlexContainer;
 	gap: 16px;
 }
+
+.cartButton{
+}
+
+.counterSelectedProducts {
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background-color: $accentColor;
+	color: $secondaryAccentColor;
+	@include FlexContainer;
+}

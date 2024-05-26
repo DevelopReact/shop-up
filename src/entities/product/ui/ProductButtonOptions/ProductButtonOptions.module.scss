@@ -2,87 +2,87 @@
 @import '@/app/styles/variables/backgroundColor.scss';
 @import '@/app/styles/variables/fontColor.scss';
 
-.ProductButtonOptions {
-	width: 100%;
-	@include FlexContainer(space-between);
-	height: 44px;
-}
+// .ProductButtonOptions {
+// 	width: 100%;
+// 	@include FlexContainer(space-between);
+// 	height: 44px;
+// }
 
-.wrapperCountButtons {
-	width: 159px;
-	height: 100%;
-	@include FlexContainer(space-between);
-	// border: 1px solid $mainOpacityColor;
-	// border-radius: 4px;
-}
+// .wrapperCountButtons {
+// 	width: 159px;
+// 	height: 100%;
+// 	@include FlexContainer(space-between);
+// 	// border: 1px solid $mainOpacityColor;
+// 	// border-radius: 4px;
+// }
 
-.countDecreaseButton,
-.countIncreaseButton {
-	width: 44px;
-	height: 100%;
-	border: none;
-	border: 1px solid $mainOpacityColor;
-	@include FlexContainer;
-	cursor: pointer;
-	background-color: $mainBackgroundColor;
+// .countDecreaseButton,
+// .countIncreaseButton {
+// 	width: 44px;
+// 	height: 100%;
+// 	border: none;
+// 	border: 1px solid $mainOpacityColor;
+// 	@include FlexContainer;
+// 	cursor: pointer;
+// 	background-color: $mainBackgroundColor;
 
-	span {
-		font-size: 24px;
-	}
-}
+// 	span {
+// 		font-size: 24px;
+// 	}
+// }
 
-.countDecreaseButton {
-	border-radius: 4px 0 0 4px;
-}
+// .countDecreaseButton {
+// 	border-radius: 4px 0 0 4px;
+// }
 
-.countIncreaseButton {
-	border-radius: 0 4px 4px 0;
-}
+// .countIncreaseButton {
+// 	border-radius: 0 4px 4px 0;
+// }
 
-.active {
-	background-color: $accentColor;
-	color: $secondaryAccentColor;
+// .active {
+// 	background-color: $accentColor;
+// 	color: $secondaryAccentColor;
 
-	svg path,
-	line {
-		stroke: $secondaryTextColor;
-	}
-}
+// 	svg path,
+// 	line {
+// 		stroke: $secondaryTextColor;
+// 	}
+// }
 
-.count {
-	width: 80px;
-	height: 44px;
-	border-top: 1px solid $mainOpacityColor;
-	border-bottom: 1px solid $mainOpacityColor;
-	@include FlexContainer;
-}
+// .count {
+// 	width: 80px;
+// 	height: 44px;
+// 	border-top: 1px solid $mainOpacityColor;
+// 	border-bottom: 1px solid $mainOpacityColor;
+// 	@include FlexContainer;
+// }
 
-.buyButton {
-	width: 165px;
-	height: 100%;
+// .buyButton {
+// 	width: 165px;
+// 	height: 100%;
 
-	button {
-		height: 100%;
-		color: $secondaryAccentColor
-	}
-}
+// 	button {
+// 		height: 100%;
+// 		color: $secondaryAccentColor
+// 	}
+// }
 
-.wishButton {
-	width: 44px;
-	height: 100%;
-	border: 1px solid $mainOpacityColor;
-	border-radius: 4px;
-	@include FlexContainer;
-	cursor: pointer;
-	background-color: $mainBackgroundColor;
-}
+// .wishButton {
+// 	width: 44px;
+// 	height: 100%;
+// 	border: 1px solid $mainOpacityColor;
+// 	border-radius: 4px;
+// 	@include FlexContainer;
+// 	cursor: pointer;
+// 	background-color: $mainBackgroundColor;
+// }
 
-.activeWish {
-	background-color: $accentColor;
-	color: $secondaryAccentColor;
+// .activeWish {
+// 	background-color: $accentColor;
+// 	color: $secondaryAccentColor;
 
-	svg path,
-	line {
-		stroke: $secondaryTextColor;
-	}
-}
+// 	svg path,
+// 	line {
+// 		stroke: $secondaryTextColor;
+// 	}
+// }

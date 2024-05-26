@@ -1,17 +1,20 @@
 // react
 import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 //lib
 import { yupResolver } from '@hookform/resolvers/yup';
-//api
-import { useGetProductsQuery } from '@/entities/product/api/productAPI';
+//actions
+import { useUpdateUserMutation } from '@/entities/user/api/userAPI';
+//selectors
+import { getUserState, userActions } from '@/entities/user';
+import { getQuestState } from '@/entities/quest';
 //ui
 import { Input } from '@/shared/ui/Input';
 import { Button } from '@/shared/ui/Button';
-import { ProductItem } from '@/pages/cart/ui/ProductItem';
+import { CartItem } from '@/pages/cart/ui/CartItem';
 import { CartTotal } from '@/pages/cart/ui/CartTotal';
 import { Checkbox } from '@/shared/ui/Checkbox';
-import { Loader } from '@/shared/ui/Loader';
 //assets
 import Check from '@/shared/libs/assets/svg/Check.svg?react';
 import Bkash from '@/shared/libs/assets/png/Bkash.png';
@@ -26,23 +29,46 @@ import styles from './CheckOut.module.scss';
 interface CheckOutProps {}
 
 export const CheckOut: FC<CheckOutProps> = ({}) => {
-  const { data, isLoading, isError } = useGetProductsQuery();
+  const dispatch = useDispatch();
+  const [updateUser] = useUpdateUserMutation();
+  const { user, isLoggedIn } = useSelector(getUserState);
+  const { quest } = useSelector(getQuestState);
+
+  const currentUser = isLoggedIn ? user : quest;
+
   const [isChecked, setIsChecked] = useState(false);
 
   const onChange = () => {
     setIsChecked(!isChecked);
   };
 
-  const { formState, register, handleSubmit, reset } = useForm({
+  const { formState, register, handleSubmit, reset } = useForm<any>({
     mode: 'onChange',
     resolver: yupResolver(checkOutSchema)
   });
 
-  const onSubmit = handleSubmit((values) => {
-    console.log(values);
+  const onSubmit = handleSubmit(
+    ({ companyName, streetAddress, apartment, town, phone }) => {
+      if (isLoggedIn) {
+        updateUser({
+          ...user,
+          companyName: companyName,
+          streetAddress: streetAddress,
+          apartment: apartment,
+          town: town,
+          phone: phone
+        })
+          .unwrap()
+          .then((data) => {
+            if (data) {
+              dispatch(userActions.setUser(data));
+            }
+          });
+      }
 
-    reset();
-  });
+      reset();
+    }
+  );
 
   return (
     <div className={styles.CheckOut}>
@@ -68,6 +94,7 @@ export const CheckOut: FC<CheckOutProps> = ({}) => {
                 register={register('firstName')}
                 error={formState.errors.firstName}
                 label='First Name*'
+                value={isLoggedIn ? user.username : ''}
               />
             </div>
             <div className={styles.inputForm}>
@@ -77,6 +104,7 @@ export const CheckOut: FC<CheckOutProps> = ({}) => {
                 register={register('companyName')}
                 error={formState.errors.companyName}
                 label='Company Name'
+                value={isLoggedIn ? user.companyName : ''}
               />
             </div>
             <div className={styles.inputForm}>
@@ -86,6 +114,7 @@ export const CheckOut: FC<CheckOutProps> = ({}) => {
                 register={register('streetAddress')}
                 error={formState.errors.streetAddress}
                 label='Street Address*'
+                value={isLoggedIn ? user.streetAddress : ''}
               />
             </div>
             <div className={styles.inputForm}>
@@ -95,6 +124,7 @@ export const CheckOut: FC<CheckOutProps> = ({}) => {
                 register={register('apartment')}
                 error={formState.errors.apartment}
                 label='Apartment, floor, etc. (optional)'
+                value={isLoggedIn ? user.apartment : ''}
               />
             </div>
             <div className={styles.inputForm}>
@@ -104,6 +134,7 @@ export const CheckOut: FC<CheckOutProps> = ({}) => {
                 register={register('town')}
                 error={formState.errors.town}
                 label='Town/City*'
+                value={isLoggedIn ? user.town : ''}
               />
             </div>
             <div className={styles.inputForm}>
@@ -113,6 +144,7 @@ export const CheckOut: FC<CheckOutProps> = ({}) => {
                 register={register('phone')}
                 error={formState.errors.phone}
                 label='Phone Number*'
+                value={isLoggedIn ? user.phone : ''}
               />
             </div>
             <div className={styles.inputForm}>
@@ -122,6 +154,7 @@ export const CheckOut: FC<CheckOutProps> = ({}) => {
                 register={register('email')}
                 error={formState.errors.email}
                 label='Email Address*'
+                value={isLoggedIn ? user.email : ''}
               />
             </div>
             <div className={styles.buttonForm}>
@@ -140,17 +173,16 @@ export const CheckOut: FC<CheckOutProps> = ({}) => {
         </div>
         <div className={styles.orderDetails}>
           <div className={styles.listCart}>
-            {data?.data.map(({ id, attributes }) => {
-              return isLoading ? (
-                <Loader />
-              ) : (
+            {currentUser.products?.map(({ id, attributes }) => {
+              return (
                 <div className={styles.rowTableCart} key={id}>
-                  <ProductItem
+                  <CartItem
+                    id={id}
                     imageSrc={attributes.mainPicture.data.attributes.url}
                     titleCard={attributes.title}
                     price={attributes.price}
                     discountPercent={attributes.discountPercent}
-                    columnStyle='columnEnd'
+                    quantity={attributes.quantity!}
                   />
                 </div>
               );

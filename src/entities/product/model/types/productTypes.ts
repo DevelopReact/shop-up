@@ -4,8 +4,8 @@ export interface IProduct {
     title: string;
     price: number;
     description: string;
-    sizes: [];
-    colors: [];
+    sizes: string[];
+    colors: string[];
     pictures: {
       data: [
         {

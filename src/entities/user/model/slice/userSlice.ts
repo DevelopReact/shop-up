@@ -11,7 +11,9 @@ const initialState: UserStateSchema = {
     username: '',
     email: '',
     password: '',
-    products: []
+    town: '',
+    products: [],
+    wishList: []
   }
 };
 

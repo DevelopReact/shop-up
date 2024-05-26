@@ -3,7 +3,9 @@ import { FC } from 'react';
 import { useSelector } from 'react-redux';
 //entities
 import { UserProfileButton } from '@/entities/user/ui/UserProfileButton/UserProfileButton';
+//selectors
 import { getUserState } from '@/entities/user';
+import { getQuestState } from '@/entities/quest';
 //ui
 import { Logo } from '@/shared/ui/Logo';
 import { NavLink } from '@/shared/ui/NavLink';
@@ -18,6 +20,7 @@ import CartIcon from '@/shared/libs/assets/svg/CartIcon.svg?react';
 import { scrollUp } from '@/shared/libs/constants/scrollUp';
 import {
   getAboutRoute,
+  getCartRoute,
   getContactRoute,
   getHomeRoute,
   getSignInRoute
@@ -28,9 +31,10 @@ import styles from './HeaderNavMenu.module.scss';
 interface HeaderNavMenuProps {}
 
 export const HeaderNavMenu: FC<HeaderNavMenuProps> = ({}) => {
-  const { isLoggedIn } = useSelector(getUserState);
+  const { user, isLoggedIn } = useSelector(getUserState);
+  const { quest } = useSelector(getQuestState);
 
-  const onScrollUp = () => scrollUp();
+  const currentUser = isLoggedIn ? user : quest;
 
   return (
     <div className={styles.HeaderNavMenu}>
@@ -41,7 +45,7 @@ export const HeaderNavMenu: FC<HeaderNavMenuProps> = ({}) => {
           textDecoration='none'
           fontSize='large'
           lineHeight='large'
-          onClick={onScrollUp}
+          onClick={() => scrollUp()}
         >
           <Logo children='Exclusive' textColor='black' />
         </Link>
@@ -51,28 +55,28 @@ export const HeaderNavMenu: FC<HeaderNavMenuProps> = ({}) => {
             children='Home'
             activeDecoration='underline'
             activeTextColor='black'
-            onClick={onScrollUp}
+            onClick={() => scrollUp()}
           />
           <NavLink
             to={getContactRoute()}
             children='Contact'
             activeTextColor='black'
             activeDecoration='underline'
-            onClick={onScrollUp}
+            onClick={() => scrollUp()}
           />
           <NavLink
             to={getAboutRoute()}
             children='About'
             activeTextColor='black'
             activeDecoration='underline'
-            onClick={onScrollUp}
+            onClick={() => scrollUp()}
           />
           <NavLink
             to={getSignInRoute()}
             children='Sign In'
             activeTextColor='black'
             activeDecoration='underline'
-            onClick={onScrollUp}
+            onClick={() => scrollUp()}
           />
         </div>
         <div className={styles.wrapperInputSearch}>
@@ -84,8 +88,24 @@ export const HeaderNavMenu: FC<HeaderNavMenuProps> = ({}) => {
           <SearchIcon className={styles.searchIcon} />
         </div>
         <div className={styles.wrapperIconButtons}>
-          <IconButton backgroundColor='white' children={<WishIcon />} />
-          <IconButton backgroundColor='white' children={<CartIcon />} />
+          <div className={styles.wishButton}>
+            <IconButton backgroundColor='white' children={<WishIcon />} />
+          </div>
+          <Link
+            to={getCartRoute()}
+            textColor='white'
+            textDecoration='none'
+            onClick={() => scrollUp()}
+          >
+            <div className={styles.cartButton}>
+              {currentUser.products?.length != 0 ? (
+                <div className={styles.counterSelectedProducts}>
+                  <span>{currentUser.products?.length}</span>
+                </div>
+              ) : null}
+              <IconButton backgroundColor='white' children={<CartIcon />} />
+            </div>
+          </Link>
           {isLoggedIn && <UserProfileButton />}
         </div>
       </div>

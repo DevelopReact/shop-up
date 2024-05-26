@@ -18,10 +18,25 @@
 	cursor: pointer;
 }
 
-.column {
+.product {
 	width: 25%;
 	@include FlexContainer;
-	gap: 20px;
+	gap: 30px;
+
+	img {
+		width: 54px;
+		height: 54px;
+	}
+}
+
+.priceProduct {
+	width: 25%;
+	@include FlexContainer;
+}
+
+.wrapperQuantity {
+	width: 25%;
+	@include FlexContainer;
 }
 
 .quantity {
@@ -29,6 +44,11 @@
 	height: 44px;
 	border-radius: 4px;
 	border: 1.5px solid rgba(0, 0, 0, 0.4);
+}
+
+.subtotal {
+	width: 25%;
+	@include FlexContainer;
 }
 
 .inputQuantity {

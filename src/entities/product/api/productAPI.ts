@@ -25,7 +25,7 @@ const productAPI = jsonPlaceholderAPI.injectEndpoints({
         providesTags: ['Products']
       })
     }),
-    getProductId: build.mutation<IProductIdResponse, number>({
+    getProductId: build.query<IProductIdResponse, number>({
       query: (id) => ({
         url: `/products/${id}?populate=*`,
         method: 'GET',
@@ -54,7 +54,7 @@ const productAPI = jsonPlaceholderAPI.injectEndpoints({
 export const {
   useGetProductsQuery,
   useGetCategoriesQuery,
-  useGetProductIdMutation,
+  useGetProductIdQuery,
   useUpdateProductMutation,
   useDeleteProductMutation
 } = productAPI;

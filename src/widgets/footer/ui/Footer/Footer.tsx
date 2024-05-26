@@ -35,7 +35,6 @@ import styles from './Footer.module.scss';
 interface FooterProps {}
 
 export const Footer: FC<FooterProps> = ({}) => {
-  const onChangeSocialIcon = () => {};
   const onScrollUp = () => scrollUp();
 
   return (
@@ -175,16 +174,16 @@ export const Footer: FC<FooterProps> = ({}) => {
             </div>
           </div>
           <div className={styles.socialIcons}>
-            <IconButton onChange={onChangeSocialIcon}>
+            <IconButton>
               <Facebook />
             </IconButton>
-            <IconButton onChange={onChangeSocialIcon}>
+            <IconButton>
               <Twitter />
             </IconButton>
-            <IconButton onChange={onChangeSocialIcon}>
+            <IconButton>
               <Instagram />
             </IconButton>
-            <IconButton onChange={onChangeSocialIcon}>
+            <IconButton>
               <LinkedIn />
             </IconButton>
           </div>

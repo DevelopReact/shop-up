@@ -3,7 +3,7 @@ import { FC, ReactNode, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 //api
-import { useGetProductIdMutation } from '../../api/productAPI';
+import { useGetProductIdQuery } from '../../api/productAPI';
 import { useUpdateUserMutation } from '@/entities/user/api/userAPI';
 //actions
 import { getUserState, userActions } from '@/entities/user';
@@ -20,6 +20,7 @@ import { IconButton } from '@/shared/ui/IconButton';
 import { Button } from '@/shared/ui/Button';
 //constants
 import { jsonPlaceholderRootURL } from '@/shared/libs/constants/jsonPlaceholderBaseURL';
+import { scrollUp } from '@/shared/libs/constants/scrollUp';
 //assets svg
 import WishIcon from '@/shared/libs/assets/svg/WishIcon.svg?react';
 import EyeIcon from '@/shared/libs/assets/svg/EyeIcon.svg?react';
@@ -46,9 +47,8 @@ export const ProductCard: FC<ProductCardProps> = ({
   const dispatch = useDispatch();
 
   const { isLoggedIn, user } = useSelector(getUserState);
-
-  const [getProductId] = useGetProductIdMutation();
   const [updateUser] = useUpdateUserMutation();
+  const { data: product, error, isLoading } = useGetProductIdQuery(productId);
 
   const [isHovered, setIsHovered] = useState(false);
   const [disabled, setDisabled] = useState(false);
@@ -72,9 +72,8 @@ export const ProductCard: FC<ProductCardProps> = ({
     setIsHovered(false);
   };
   //click add product to cart
-  const onClickAddToCart = async (productId: number) => {
-    const productData = await getProductId(productId).unwrap();
-    const newProduct: IProduct = productData.data;
+  const onClickAddToCart = async () => {
+    const newProduct: IProduct = product!.data;
 
     dispatch(productActions.setProductCart(newProduct));
 
@@ -96,6 +95,8 @@ export const ProductCard: FC<ProductCardProps> = ({
       dispatch(questActions.setQuest(newProduct));
     }
   };
+  //click add to wish list
+  const onClickAddToWishlist = () => {};
 
   return (
     <div
@@ -104,28 +105,31 @@ export const ProductCard: FC<ProductCardProps> = ({
       onMouseLeave={handleMouseLeave}
     >
       <div className={styles.card}>
-        <Link to={`product/${productId}`}>
-          {children}
-          <div className={styles.iconsWrapper}>
-            <div className={styles.iconCard}>
-              <IconButton backgroundColor='white'>
-                <WishIcon />
-              </IconButton>
-            </div>
-            <div className={styles.iconCard}>
+        {children}
+        <div className={styles.iconsWrapper}>
+          <div className={styles.iconCard}>
+            <IconButton
+              backgroundColor='white'
+              onClick={() => onClickAddToWishlist()}
+            >
+              <WishIcon />
+            </IconButton>
+          </div>
+          <Link to={`product/${productId}`}>
+            <div className={styles.iconCard} onClick={() => scrollUp()}>
               <IconButton backgroundColor='white'>
                 <EyeIcon />
               </IconButton>
             </div>
-          </div>
-          <img src={`${jsonPlaceholderRootURL}${src}`} alt={titleCard} />
-        </Link>
+          </Link>
+        </div>
+        <img src={`${jsonPlaceholderRootURL}${src}`} alt={titleCard} />
         {isHovered && (
           <Button
             type='button'
             backgroundColor='black'
             textColor='white'
-            onClick={() => onClickAddToCart(productId)}
+            onClick={() => onClickAddToCart()}
             disabled={disabled}
           >
             {!disabled ? 'Add To Cart' : 'Added'}
@@ -133,17 +137,15 @@ export const ProductCard: FC<ProductCardProps> = ({
         )}
       </div>
       <div className={styles.titleCard}>
-        <Link to={`product/${productId}`}>
-          <div className={styles.describeCard}>
-            <p>{titleCard}</p>
+        <div className={styles.describeCard}>
+          <p>{titleCard}</p>
+        </div>
+        <div className={styles.price}>
+          <div className={styles.currentPrice}>${priceWithDiscount}</div>
+          <div className={styles.previousPrice}>
+            {discountPercent ? `$${price}` : null}
           </div>
-          <div className={styles.price}>
-            <div className={styles.currentPrice}>${priceWithDiscount}</div>
-            <div className={styles.previousPrice}>
-              {discountPercent ? `$${price}` : null}
-            </div>
-          </div>
-        </Link>
+        </div>
         <LikeStarsCount />
       </div>
     </div>

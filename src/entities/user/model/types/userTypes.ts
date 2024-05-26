@@ -11,6 +11,12 @@ export interface IUser {
   createdAt?: string;
   updatedAt?: string;
   products?: IProduct[];
+  companyName?: string;
+  streetAddress?: string;
+  apartment?: string;
+  town: string;
+  phone?: string;
+  wishList?: IProduct[];
 }
 
 export type IGetUsersResponse = IUser[];

@@ -24,8 +24,6 @@ export const RelatedItem: FC<RelatedItemProps> = ({}) => {
     .filter((data) => data.attributes.discountPercent)
     .slice(0, 5);
 
-  const onClickMonthOffer = () => {};
-
   if (isError) {
     navigate(getErrorRoute());
     scrollUp();
@@ -53,7 +51,6 @@ export const RelatedItem: FC<RelatedItemProps> = ({}) => {
                 price={attributes.price}
                 discountPercent={attributes.discountPercent}
                 productId={id}
-                onClickAddToCart={() => scrollUp()}
               />
             ))
           )}

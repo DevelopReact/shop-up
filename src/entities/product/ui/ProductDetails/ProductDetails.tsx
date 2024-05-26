@@ -1,47 +1,55 @@
 // react
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { useParams } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+//libs
+import classNames from 'classnames';
 //api
-import { useGetProductIdMutation } from '../../api/productAPI';
-//types
-import { IProductIdResponse } from './../../model/types/productTypes';
+import { useGetProductIdQuery } from '../../api/productAPI';
+import { useUpdateUserMutation } from '@/entities/user/api/userAPI';
+//entities slice
+import { getUserState, userActions } from '@/entities/user';
+import { getQuestState, questActions } from '@/entities/quest';
 //ui
-import { ProductButtonOptions } from '../ProductButtonOptions';
 import { LikeStarsCount } from '../LikeStarsCount';
 import { ProductSizeOptions } from '../ProductSizeOptions';
 import { ProductColorOptions } from '../ProductColorOptions';
 import { RelatedItem } from '../RelatedItem';
+import { Button } from '@/shared/ui/Button';
 //constants
 import { jsonPlaceholderRootURL } from '@/shared/libs/constants/jsonPlaceholderBaseURL';
 //assets
 import IconDelivery from '@/shared/libs/assets/svg/icon-delivery.svg?react';
 import IconReturns from '@/shared/libs/assets/svg/Icon-return.svg?react';
+import IconPlus from '@/shared/libs/assets/svg/icon-plus.svg?react';
+import IconMinus from '@/shared/libs/assets/svg/icon-minus.svg?react';
+import WishIcon from '@/shared/libs/assets/svg/WishIcon.svg?react';
 // styles
 import styles from './ProductDetails.module.scss';
 
 interface ProductDetailsProps {}
 
 export const ProductDetails: FC<ProductDetailsProps> = ({}) => {
+  const dispatch = useDispatch();
   const { productId } = useParams();
 
-  const [product, setProduct] = useState<IProductIdResponse>();
+  const { user, isLoggedIn } = useSelector(getUserState);
+  const { quest } = useSelector(getQuestState);
+
+  const [updateUser] = useUpdateUserMutation();
+
   const [selectedSize, setSelectedSize] = useState<string>('');
   const [selectedColor, setSelectedColor] = useState<string>('');
+  const [activeDecreaseButton, setActiveDecreaseButton] = useState(false);
+  const [activeIncreaseButton, setActiveIncreaseButton] = useState(false);
+  const [count, setCount] = useState(1);
+  const [activeWish, setActiveWish] = useState(false);
 
-  const [getProductId] = useGetProductIdMutation();
-  //getting product data by id
-  useEffect(() => {
-    if (productId) {
-      getProductId(+productId)
-        .unwrap()
-        .then((data) => {
-          setProduct(data);
-        })
-        .catch((error) => {
-          console.error('Error fetching product:', error);
-        });
-    }
-  }, [productId, getProductId]);
+  const {
+    data: productById,
+    error,
+    isLoading
+  } = useGetProductIdQuery(Number(productId));
   //handle change product data options
   const handleSizeChange = (size: string) => {
     setSelectedSize(size);
@@ -51,11 +59,82 @@ export const ProductDetails: FC<ProductDetailsProps> = ({}) => {
   };
   //calculation price count with discount
   const priceWithDiscount = Math.round(
-    product! &&
-      product.data.attributes.price -
-        (product.data.attributes.price *
-          product.data.attributes.discountPercent) /
+    productById! &&
+      productById.data.attributes.price -
+        (productById.data.attributes.price *
+          productById.data.attributes.discountPercent) /
           100
+  );
+  //count quantity
+  const onClickDecrease = () => {
+    if (count > 1) {
+      setActiveDecreaseButton(true);
+      setActiveIncreaseButton(false);
+      setCount(count - 1);
+    }
+  };
+  const onClickIncrease = () => {
+    setActiveIncreaseButton(true);
+    setActiveDecreaseButton(false);
+    setCount(count + 1);
+    if (count < 1) {
+      setCount(1);
+    }
+  };
+  //on click dispatch user products
+  const onClickUpdateCartProducts = () => {
+    const updateProductById: any = {
+      ...productById?.data,
+      attributes: {
+        ...productById?.data.attributes,
+        sizes: [selectedSize] || [],
+        colors: [selectedColor] || [],
+        quantity: count
+      }
+    };
+
+    if (isLoggedIn) {
+      const currentProducts = user.products || [];
+      const updatedProducts = [...currentProducts, updateProductById];
+
+      user.products?.forEach((product) =>
+        product.id === Number(productId)
+          ? updateUser({
+              ...user,
+              products: updateProductById
+            })
+              .unwrap()
+              .then((data) => {
+                if (data) {
+                  dispatch(userActions.setUser(data));
+                }
+              })
+          : updateUser({
+              ...user,
+              products: updatedProducts
+            })
+              .unwrap()
+              .then((data) => {
+                if (data) {
+                  dispatch(userActions.setUser(data));
+                }
+              })
+      );
+    } else {
+      quest.products?.forEach((product) =>
+        product.id === Number(productId)
+          ? dispatch(
+              questActions.updateQuest({ products: [updateProductById] })
+            )
+          : dispatch(questActions.setQuest(updateProductById))
+      );
+    }
+  };
+  //unblock buy button
+  const isBuyButtonDisabled = !(
+    (productById?.data.attributes.sizes.length === 0 || selectedSize) &&
+    (productById?.data.attributes.colors.length === 0 || selectedColor) &&
+    count > 0
   );
 
   return (
@@ -63,15 +142,16 @@ export const ProductDetails: FC<ProductDetailsProps> = ({}) => {
       <div className={styles.headerContact}>
         <div className={styles.roadMap}>
           <p>
-            Account&nbsp;/&nbsp;{product?.data.attributes.category}&nbsp;/&nbsp;
+            Account&nbsp;/&nbsp;{productById?.data.attributes.category}
+            &nbsp;/&nbsp;
           </p>
-          <span>{product?.data.attributes.title}</span>
+          <span>{productById?.data.attributes.title}</span>
         </div>
       </div>
       <div className={styles.mainProductDetails}>
         <div className={styles.productPictures}>
           <div className={styles.minorPictures}>
-            {product?.data.attributes.pictures.data?.map((data) => {
+            {productById?.data.attributes.pictures.data?.map((data) => {
               return (
                 <div className={styles.picture} key={data.id}>
                   <img
@@ -83,15 +163,15 @@ export const ProductDetails: FC<ProductDetailsProps> = ({}) => {
           </div>
           <div className={styles.mainPicture}>
             <img
-              src={`${jsonPlaceholderRootURL}${product?.data.attributes.mainPicture.data.attributes.url}`}
-              alt={product?.data.attributes.title}
+              src={`${jsonPlaceholderRootURL}${productById?.data.attributes.mainPicture.data.attributes.url}`}
+              alt={productById?.data.attributes.title}
             />
           </div>
         </div>
         <div className={styles.productOptions}>
           <div className={styles.productData}>
             <div className={styles.productTitle}>
-              <h1>{product?.data.attributes.title}</h1>
+              <h1>{productById?.data.attributes.title}</h1>
             </div>
             <div className={styles.productLikes}>
               <LikeStarsCount />
@@ -103,13 +183,13 @@ export const ProductDetails: FC<ProductDetailsProps> = ({}) => {
               <h2>${priceWithDiscount.toFixed(2)}</h2>
             </div>
             <div className={styles.productDescription}>
-              <p>{product?.data.attributes.description}</p>
+              <p>{productById?.data.attributes.description}</p>
             </div>
           </div>
           <div className={styles.productVarietyChoice}>
             <div className={styles.productColors}>
-              {product?.data.attributes.colors ? <p>Colors:</p> : null}
-              {product?.data.attributes.colors?.map((color: string) => {
+              {productById?.data.attributes.colors ? <p>Colors:</p> : null}
+              {productById?.data.attributes.colors?.map((color: string) => {
                 return (
                   <ProductColorOptions
                     buttonBackground={color}
@@ -122,8 +202,8 @@ export const ProductDetails: FC<ProductDetailsProps> = ({}) => {
               })}
             </div>
             <div className={styles.productSizes}>
-              {product?.data.attributes.sizes ? <p>Size:&nbsp;</p> : null}
-              {product?.data.attributes.sizes?.map((size: string) => {
+              {productById?.data.attributes.sizes ? <p>Size:&nbsp;</p> : null}
+              {productById?.data.attributes.sizes?.map((size: string) => {
                 return (
                   <ProductSizeOptions
                     key={size}
@@ -135,7 +215,47 @@ export const ProductDetails: FC<ProductDetailsProps> = ({}) => {
               })}
             </div>
             <div className={styles.wrapperChoiceButtons}>
-              <ProductButtonOptions />
+              <div className={styles.ProductButtonOptions}>
+                <div className={styles.wrapperCountButtons}>
+                  <button
+                    onClick={onClickDecrease}
+                    className={classNames(styles.countDecreaseButton, {
+                      [styles.active]: activeDecreaseButton
+                    })}
+                  >
+                    <IconMinus />
+                  </button>
+                  <div className={styles.count}>
+                    <p>{count}</p>
+                  </div>
+                  <button
+                    onClick={onClickIncrease}
+                    className={classNames(styles.countIncreaseButton, {
+                      [styles.active]: activeIncreaseButton
+                    })}
+                  >
+                    <IconPlus />
+                  </button>
+                </div>
+                <div className={styles.buyButton}>
+                  <Button
+                    backgroundColor='accent'
+                    type='button'
+                    disabled={isBuyButtonDisabled}
+                    onClick={onClickUpdateCartProducts}
+                  >
+                    Buy Now
+                  </Button>
+                </div>
+                <button
+                  className={classNames(styles.wishButton, {
+                    [styles.activeWish]: activeWish
+                  })}
+                  onClick={() => setActiveWish(!activeWish)}
+                >
+                  <WishIcon />
+                </button>
+              </div>
             </div>
           </div>
           <div className={styles.delivery}>

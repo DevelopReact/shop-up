@@ -2,7 +2,7 @@
 @import '@/app/styles/variables/backgroundColor.scss';
 @import '@/app/styles/variables/fontColor.scss';
 
-.ProductsList {
+.CartItemList {
 	width: 100%;
 	@include FlexDirection(space-between);
 }

@@ -1,5 +1,5 @@
 // react
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 //api
 import { useUpdateUserMutation } from '@/entities/user/api/userAPI';
@@ -9,88 +9,103 @@ import { questActions } from '@/entities/quest';
 //selectors
 import { getUserState, userActions } from '@/entities/user';
 import { getQuestState } from '@/entities/quest';
-//ui
-import { ProductItem } from '../ProductItem';
+//constants
+import { jsonPlaceholderRootURL } from '@/shared/libs/constants/jsonPlaceholderBaseURL';
 //assets
 import ArrowUp from '@/shared/libs/assets/svg/ArrowUp.svg?react';
 import ArrowDown from '@/shared/libs/assets/svg/ArrowDown.svg?react';
 import CancelIcon from '@/shared/libs/assets/svg/icon-cancel.svg?react';
 // styles
 import styles from './CartItem.module.scss';
-import { useGetProductIdMutation } from '@/entities/product/api/productAPI';
 
-interface CartItemProps {}
+import { IUser } from '@/entities/user/model/types/userTypes';
 
-export const CartItem: FC<CartItemProps> = ({}) => {
+interface CartItemProps {
+  id: number;
+  imageSrc: string;
+  titleCard: string;
+  price: number;
+  discountPercent: number;
+  quantity: number;
+}
+
+export const CartItem: FC<CartItemProps> = ({
+  id,
+  imageSrc,
+  titleCard,
+  price,
+  discountPercent,
+  quantity
+}) => {
   const dispatch = useDispatch();
 
   const { user, isLoggedIn } = useSelector(getUserState);
   const { quest } = useSelector(getQuestState);
 
   const [updateUser] = useUpdateUserMutation();
-  const [getProductId] = useGetProductIdMutation();
 
-  const [showCancelButton, setShowCancelButton] = useState<number | null>(null);
-  const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
+  const [showCancelButton, setShowCancelButton] = useState<boolean>(false);
 
-  const updateQuantity = (productId: number, quantity: number) => {
-    setQuantities((prevQuantities) => ({
-      ...prevQuantities,
-      [productId]: quantity
-    }));
-  };
-
-  const getQuantity = (productId: number) => {
-    return quantities[productId] || 1;
-  };
-
-  const onIncreaseQuantity = async (productId: number) => {
-    const newQuantity = getQuantity(productId) + 1;
-    updateQuantity(productId, newQuantity);
-
-    const productData = await getProductId(productId).unwrap();
-    const currentProduct: IProduct = productData.data;
-
-    const productWithQuantity = {
-      ...currentProduct,
-      attributes: {
-        ...currentProduct.attributes,
-        quantity: newQuantity
-      }
-    };
-
+  const updateProductQuantity = async (updatedQuantity: number) => {
     if (isLoggedIn) {
-      const updatedUserData = {
-        ...user,
-        products: user.products?.map((product) => {
-          product.id === productId ? productWithQuantity : product;
-        })
-      };
+      const newProductList = user.products?.map((product) =>
+        product.id === id
+          ? {
+              ...product,
+              attributes: {
+                ...product.attributes,
+                quantity: updatedQuantity
+              }
+            }
+          : product
+      );
 
-      console.log(updatedUserData);
-
-      // await updateUser(updatedUserData)
-      //   .unwrap()
-      //   .then((data) => console.log(data));
+      updateUser({ id: user.id, products: newProductList })
+        .unwrap()
+        .then((data: IUser) => {
+          if (data) {
+            dispatch(userActions.setUser(data));
+          }
+        });
+    } else {
+      const newProductList = quest.products?.map((product) =>
+        product.id === id
+          ? {
+              ...product,
+              attributes: {
+                ...product.attributes,
+                quantity: updatedQuantity
+              }
+            }
+          : product
+      );
+      console.log(quest);
+      dispatch(questActions.updateQuest({ products: newProductList }));
     }
   };
+  //count quantity
+  const onIncreaseQuantity = () => {
+    updateProductQuantity(quantity + 1);
+  };
 
-  const onDecreaseQuantity = (productId: number) => {
-    const currentQuantity = getQuantity(productId);
-    if (currentQuantity > 1) {
-      const newQuantity = currentQuantity - 1;
-      updateQuantity(productId, newQuantity);
+  const onDecreaseQuantity = () => {
+    if (quantity !== 1) {
+      updateProductQuantity(quantity - 1);
     }
   };
-
-  const handleMouseEnter = (productId: number) => {
-    setShowCancelButton(productId);
+  //show/hide cancel button
+  const handleMouseEnter = () => {
+    setShowCancelButton(!showCancelButton);
   };
-
   const handleMouseLeave = () => {
-    setShowCancelButton(null);
+    setShowCancelButton(!showCancelButton);
   };
+  //count price
+  const priceWithDiscount = Math.round(price - (price * discountPercent) / 100);
+  const currentPrice = discountPercent ? priceWithDiscount : price;
 
+  const totalPrice = quantity * currentPrice;
+  //delete product
   const deleteProduct = async (productId: number) => {
     if (isLoggedIn) {
       const newProductList = user.products?.filter(
@@ -120,31 +135,19 @@ export const CartItem: FC<CartItemProps> = ({}) => {
         products: newProductList
       };
 
+      dispatch(productActions.deleteProductId(productId));
       dispatch(questActions.updateQuest(updateQuest));
     }
   };
 
-  const productsList = isLoggedIn ? user.products : quest.products;
-
-  return productsList?.map(({ id, attributes }) => {
-    const priceWithDiscount = Math.round(
-      attributes?.price -
-        (attributes?.price * attributes?.discountPercent) / 100
-    );
-    const quantity = quantities[id] || 1;
-
-    const totalPrice = attributes?.discountPercent
-      ? priceWithDiscount * quantity
-      : attributes?.price * quantity;
-
-    return (
+  return (
+    <>
       <div
         className={styles.rowTableCart}
-        key={id}
-        onMouseEnter={() => handleMouseEnter(id)}
+        onMouseEnter={() => handleMouseEnter()}
         onMouseLeave={() => handleMouseLeave()}
       >
-        {showCancelButton === id && (
+        {showCancelButton && (
           <div
             className={styles.cancelButton}
             onClick={() => deleteProduct(id)}
@@ -152,28 +155,32 @@ export const CartItem: FC<CartItemProps> = ({}) => {
             <CancelIcon />
           </div>
         )}
-        <ProductItem
-          imageSrc={attributes?.mainPicture.data.attributes.url}
-          titleCard={attributes?.title}
-          price={attributes?.price}
-          discountPercent={attributes?.discountPercent}
-          columnStyle='columnCenter'
-        />
-        <div className={styles.column}>
+        <div className={styles.product}>
+          <img src={`${jsonPlaceholderRootURL}${imageSrc}`} alt={titleCard} />
+          <div className={styles.titleProduct}>
+            <span>{titleCard}</span>
+          </div>
+        </div>
+        <div className={styles.priceProduct}>
+          <span>{currentPrice}</span>
+        </div>
+        <div className={styles.wrapperQuantity}>
           <div className={styles.quantity}>
             <div className={styles.inputQuantity}>
               <div className={styles.valueQuantity}>
                 {quantity < 10 ? '0' + quantity : quantity}
               </div>
               <div className={styles.arrowsQuantity}>
-                <ArrowUp onClick={() => onIncreaseQuantity(id)} />
-                <ArrowDown onClick={() => onDecreaseQuantity(id)} />
+                <ArrowUp onClick={() => onIncreaseQuantity()} />
+                <ArrowDown onClick={() => onDecreaseQuantity()} />
               </div>
             </div>
           </div>
         </div>
-        <div className={styles.column}>${totalPrice}</div>
+        <div className={styles.subtotal}>
+          <span>{totalPrice > 0 ? totalPrice : 'out of stock'}</span>
+        </div>
       </div>
-    );
-  });
+    </>
+  );
 };

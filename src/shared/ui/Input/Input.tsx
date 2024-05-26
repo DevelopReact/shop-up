@@ -17,6 +17,7 @@ interface InputProps {
     message?: string;
   };
   label?: string;
+  value?: string;
 }
 
 export const Input: FC<InputProps> = ({
@@ -27,7 +28,8 @@ export const Input: FC<InputProps> = ({
   textColor,
   error,
   register,
-  label
+  label,
+  value
 }) => {
   return (
     <>
@@ -37,6 +39,7 @@ export const Input: FC<InputProps> = ({
       <input
         {...register}
         type={type}
+        value={value}
         placeholder={placeholder}
         className={classNames(styles.Input, {
           [styles.whiteBC]: backgroundColor === 'white',

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 //ui
 import { CartClearButton } from '../CartClearButton';
 import { Coupon } from '../Coupon';
-import { ProductsList } from '../ProductsList';
+import { CartItemList } from '../CartItemList';
 import { Button } from '@/shared/ui/Button';
 import { CartTotal } from '../CartTotal';
 //libs
@@ -39,7 +39,7 @@ export const Cart: FC<CartProps> = ({}) => {
           <div className={styles.column}>Quantity</div>
           <div className={styles.column}>Subtotal</div>
         </div>
-        <ProductsList />
+        <CartItemList />
         <div className={styles.buttonsTableCart}>
           <div className={styles.buttonCart}>
             <Button
