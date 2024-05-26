@@ -48,7 +48,7 @@ export const ProductCard: FC<ProductCardProps> = ({
 
   const { isLoggedIn, user } = useSelector(getUserState);
   const [updateUser] = useUpdateUserMutation();
-  const { data: product, error, isLoading } = useGetProductIdQuery(productId);
+  const { data: product } = useGetProductIdQuery(productId);
 
   const [isHovered, setIsHovered] = useState(false);
   const [disabled, setDisabled] = useState(false);

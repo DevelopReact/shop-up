@@ -45,11 +45,7 @@ export const ProductDetails: FC<ProductDetailsProps> = ({}) => {
   const [count, setCount] = useState(1);
   const [activeWish, setActiveWish] = useState(false);
 
-  const {
-    data: productById,
-    error,
-    isLoading
-  } = useGetProductIdQuery(Number(productId));
+  const { data: productById } = useGetProductIdQuery(Number(productId));
   //handle change product data options
   const handleSizeChange = (size: string) => {
     setSelectedSize(size);

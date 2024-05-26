@@ -1,14 +1,16 @@
 // react
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 //api
 import { useUpdateUserMutation } from '@/entities/user/api/userAPI';
 //actions
-import { IProduct, productActions } from '@/entities/product';
+import { productActions } from '@/entities/product';
 import { questActions } from '@/entities/quest';
 //selectors
 import { getUserState, userActions } from '@/entities/user';
 import { getQuestState } from '@/entities/quest';
+//types
+import { IUser } from '@/entities/user/model/types/userTypes';
 //constants
 import { jsonPlaceholderRootURL } from '@/shared/libs/constants/jsonPlaceholderBaseURL';
 //assets
@@ -17,8 +19,6 @@ import ArrowDown from '@/shared/libs/assets/svg/ArrowDown.svg?react';
 import CancelIcon from '@/shared/libs/assets/svg/icon-cancel.svg?react';
 // styles
 import styles from './CartItem.module.scss';
-
-import { IUser } from '@/entities/user/model/types/userTypes';
 
 interface CartItemProps {
   id: number;

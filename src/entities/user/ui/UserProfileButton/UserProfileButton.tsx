@@ -5,8 +5,6 @@ import { IconButton } from '@/shared/ui/IconButton';
 import { UserDropDown } from '../UserDropDown';
 //assets
 import UserIcon from '@/shared/libs/assets/svg/userLink.svg?react';
-// styles
-import styles from './UserProfileButton.module.scss';
 
 interface UserProfileButtonProps {}
 
