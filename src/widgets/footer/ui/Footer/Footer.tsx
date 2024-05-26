@@ -13,7 +13,7 @@ import Vector from '@/shared/libs/assets/svg/Vector.svg?react';
 import Facebook from '@/shared/libs/assets/svg/Facebook.svg?react';
 import Twitter from '@/shared/libs/assets/svg/Twitter.svg?react';
 import Instagram from '@/shared/libs/assets/svg/Instagram.svg?react';
-import LinkedIn from '@/shared/libs/assets/svg/LinkedIn.svg?react';
+import Linkedin from '@/shared/libs/assets/svg/Linkedin.svg?react';
 import Group from '@/shared/libs/assets/svg/Group.svg?react';
 import {
   getAccountRoute,
@@ -184,7 +184,7 @@ export const Footer: FC<FooterProps> = ({}) => {
               <Instagram />
             </IconButton>
             <IconButton>
-              <LinkedIn />
+              <Linkedin />
             </IconButton>
           </div>
         </div>
