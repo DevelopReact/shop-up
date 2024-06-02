@@ -36,10 +36,16 @@
 }
 
 .cartButton{
+	width: 40px;
+	height: 40px;
+	@include FlexContainer;
+	position: relative;
 }
 
 .counterSelectedProducts {
 	position: absolute;
+	right: 0;
+	top: 0;
 	width: 20px;
 	height: 20px;
 	border-radius: 50%;

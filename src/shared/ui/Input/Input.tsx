@@ -1,6 +1,10 @@
 // react
-import { FC, HTMLInputTypeAttribute } from 'react';
-import { UseFormRegisterReturn } from 'react-hook-form';
+import { FC, HTMLInputTypeAttribute, useEffect } from 'react';
+import {
+  FieldValues,
+  UseFormRegisterReturn,
+  UseFormSetValue
+} from 'react-hook-form';
 //lib
 import classNames from 'classnames';
 // styles
@@ -13,11 +17,12 @@ interface InputProps {
   borderColor?: 'black' | 'blackOpacity';
   textColor?: 'white' | 'black';
   register?: UseFormRegisterReturn;
+  setValue?: UseFormSetValue<FieldValues>;
+  value?: string;
   error?: {
     message?: string;
   };
   label?: string;
-  value?: string;
 }
 
 export const Input: FC<InputProps> = ({
@@ -28,9 +33,16 @@ export const Input: FC<InputProps> = ({
   textColor,
   error,
   register,
-  label,
-  value
+  setValue,
+  value,
+  label
 }) => {
+  useEffect(() => {
+    if (setValue && value) {
+      setValue(register?.name!, value);
+    }
+  }, [value, setValue, register]);
+
   return (
     <>
       <div className={styles.label}>
@@ -39,7 +51,6 @@ export const Input: FC<InputProps> = ({
       <input
         {...register}
         type={type}
-        value={value}
         placeholder={placeholder}
         className={classNames(styles.Input, {
           [styles.whiteBC]: backgroundColor === 'white',

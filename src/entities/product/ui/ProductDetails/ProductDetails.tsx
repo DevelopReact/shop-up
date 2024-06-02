@@ -26,6 +26,7 @@ import IconMinus from '@/shared/libs/assets/svg/icon-minus.svg?react';
 import WishIcon from '@/shared/libs/assets/svg/WishIcon.svg?react';
 // styles
 import styles from './ProductDetails.module.scss';
+import { IProduct } from '../..';
 
 interface ProductDetailsProps {}
 
@@ -46,14 +47,14 @@ export const ProductDetails: FC<ProductDetailsProps> = ({}) => {
   const [activeWish, setActiveWish] = useState(false);
 
   const { data: productById } = useGetProductIdQuery(Number(productId));
-  //handle change product data options
+
   const handleSizeChange = (size: string) => {
     setSelectedSize(size);
   };
   const handleColorChange = (color: string) => {
     setSelectedColor(color);
   };
-  //calculation price count with discount
+
   const priceWithDiscount = Math.round(
     productById! &&
       productById.data.attributes.price -
@@ -61,7 +62,7 @@ export const ProductDetails: FC<ProductDetailsProps> = ({}) => {
           productById.data.attributes.discountPercent) /
           100
   );
-  //count quantity
+
   const onClickDecrease = () => {
     if (count > 1) {
       setActiveDecreaseButton(true);
@@ -77,53 +78,72 @@ export const ProductDetails: FC<ProductDetailsProps> = ({}) => {
       setCount(1);
     }
   };
-  //on click dispatch user products
+
   const onClickUpdateCartProducts = () => {
-    const updateProductById: any = {
-      ...productById?.data,
+    const updateProductById: IProduct = {
+      id: productById?.data.id!,
       attributes: {
-        ...productById?.data.attributes,
+        ...productById?.data.attributes!,
         sizes: [selectedSize] || [],
         colors: [selectedColor] || [],
         quantity: count
       }
     };
 
-    if (isLoggedIn) {
-      const currentProducts = user.products || [];
-      const updatedProducts = [...currentProducts, updateProductById];
+    const currentProducts = user.products || quest.products || [];
 
-      user.products?.forEach((product) =>
-        product.id === Number(productId)
-          ? updateUser({
-              ...user,
-              products: updateProductById
-            })
-              .unwrap()
-              .then((data) => {
-                if (data) {
-                  dispatch(userActions.setUser(data));
-                }
-              })
-          : updateUser({
-              ...user,
-              products: updatedProducts
-            })
-              .unwrap()
-              .then((data) => {
-                if (data) {
-                  dispatch(userActions.setUser(data));
-                }
-              })
-      );
+    const isProductInCart = currentProducts.some(
+      (item) => item.id === productById?.data.id
+    );
+
+    const updatedProducts = currentProducts.map((item) => {
+      return item.id === productById?.data.id ? updateProductById : item;
+    });
+
+    if (isLoggedIn) {
+      if (!isProductInCart) {
+        updateUser({
+          id: user.id,
+          products: [...currentProducts, updateProductById]
+        })
+          .unwrap()
+          .then((data) => {
+            if (data) {
+              dispatch(userActions.setUser(data));
+            }
+          });
+      }
+
+      if (isProductInCart) {
+        updateUser({
+          id: user.id,
+          products: updatedProducts
+        })
+          .unwrap()
+          .then((data) => {
+            if (data) {
+              dispatch(userActions.setUser(data));
+            }
+          });
+      }
     } else {
-      quest.products?.forEach((product) =>
-        product.id === Number(productId)
-          ? dispatch(
-              questActions.updateQuest({ products: [updateProductById] })
-            )
-          : dispatch(questActions.setQuest(updateProductById))
-      );
+      if (!isProductInCart) {
+        dispatch(
+          questActions.updateQuest({
+            ...quest,
+            products: [...currentProducts, updateProductById]
+          })
+        );
+      }
+
+      if (isProductInCart) {
+        dispatch(
+          questActions.updateQuest({
+            ...quest,
+            products: updatedProducts
+          })
+        );
+      }
     }
   };
   //unblock buy button

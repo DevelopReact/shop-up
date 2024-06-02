@@ -106,6 +106,7 @@ export const TodayOffer: FC<TodayOfferProps> = ({}) => {
                     price={attributes.price}
                     discountPercent={attributes.discountPercent}
                     productId={id}
+                    iconAction='addToWishList'
                   />
                 ))}
               {visibleFlashProduct
@@ -121,6 +122,7 @@ export const TodayOffer: FC<TodayOfferProps> = ({}) => {
                     price={attributes.price}
                     discountPercent={attributes.discountPercent}
                     productId={id}
+                    iconAction='addToWishList'
                   />
                 ))}
             </>

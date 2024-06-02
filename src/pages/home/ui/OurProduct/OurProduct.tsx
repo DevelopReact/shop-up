@@ -97,6 +97,7 @@ export const OurProduct: FC<OurProductProps> = ({}) => {
                     price={attributes.price}
                     discountPercent={attributes.discountPercent}
                     productId={id}
+                    iconAction='addToWishList'
                   />
                 ))}
               {visibleOurProduct
@@ -112,6 +113,7 @@ export const OurProduct: FC<OurProductProps> = ({}) => {
                     price={attributes.price}
                     discountPercent={attributes.discountPercent}
                     productId={id}
+                    iconAction='addToWishList'
                   />
                 ))}
             </>

@@ -7,7 +7,7 @@ import { useGetProductIdQuery } from '../../api/productAPI';
 import { useUpdateUserMutation } from '@/entities/user/api/userAPI';
 //actions
 import { getUserState, userActions } from '@/entities/user';
-import { questActions } from '@/entities/quest';
+import { getQuestState, questActions } from '@/entities/quest';
 //types actions products
 import { IProduct, productActions } from '../..';
 //selectors products
@@ -22,8 +22,9 @@ import { Button } from '@/shared/ui/Button';
 import { jsonPlaceholderRootURL } from '@/shared/libs/constants/jsonPlaceholderBaseURL';
 import { scrollUp } from '@/shared/libs/constants/scrollUp';
 //assets svg
-import WishIcon from '@/shared/libs/assets/svg/WishIcon.svg?react';
 import EyeIcon from '@/shared/libs/assets/svg/EyeIcon.svg?react';
+import LikeIconClickOff from '@/shared/libs/assets/svg/like-icon-off.svg?react';
+import LikeIconClickOn from '@/shared/libs/assets/svg/like-icon-on.svg?react';
 // styles
 import styles from './ProductCard.module.scss';
 
@@ -34,6 +35,8 @@ interface ProductCardProps {
   price: number;
   discountPercent: number;
   productId: number;
+  icon?: ReactNode;
+  iconAction: 'addToWishList' | 'DeleteCard';
 }
 
 export const ProductCard: FC<ProductCardProps> = ({
@@ -42,23 +45,30 @@ export const ProductCard: FC<ProductCardProps> = ({
   titleCard,
   price,
   discountPercent,
-  productId
+  productId,
+  icon,
+  iconAction
 }) => {
   const dispatch = useDispatch();
 
   const { isLoggedIn, user } = useSelector(getUserState);
+  const { quest } = useSelector(getQuestState);
   const [updateUser] = useUpdateUserMutation();
   const { data: product } = useGetProductIdQuery(productId);
 
   const [isHovered, setIsHovered] = useState(false);
-  const [disabled, setDisabled] = useState(false);
+  const [disabledCard, setDisabledCard] = useState(false);
 
+  const currentUser = isLoggedIn ? user : quest;
+  const isProductInWishlist = currentUser?.wishList?.some(
+    (item) => item.id === productId
+  );
   //disable selected product card
   const productsCart = useSelector(getProductState);
   useEffect(() => {
     productsCart?.data.map((product) => {
       if (product.id === productId) {
-        setDisabled(true);
+        setDisabledCard(true);
       }
     });
   }, [productsCart]);
@@ -71,7 +81,7 @@ export const ProductCard: FC<ProductCardProps> = ({
   const handleMouseLeave = () => {
     setIsHovered(false);
   };
-  //click add product to cart
+
   const onClickAddToCart = async () => {
     const newProduct: IProduct = product!.data;
 
@@ -92,11 +102,80 @@ export const ProductCard: FC<ProductCardProps> = ({
           }
         });
     } else {
-      dispatch(questActions.setQuest(newProduct));
+      dispatch(questActions.setQuestProduct(newProduct));
     }
   };
-  //click add to wish list
-  const onClickAddToWishlist = () => {};
+
+  const onClickAddToWishlist = () => {
+    const newProduct: IProduct = product!.data;
+
+    if (isLoggedIn) {
+      const currentWishList = user.wishList || [];
+      const updatedWishList = [...currentWishList, newProduct];
+
+      const isProductInWishList = user.wishList?.some(
+        (item) => item.id === newProduct.id
+      );
+
+      if (!isProductInWishList) {
+        updateUser({
+          ...user,
+          wishList: updatedWishList
+        })
+          .unwrap()
+          .then((data: IUser) => {
+            if (data) {
+              dispatch(userActions.setUser(data));
+            }
+          });
+      }
+    } else {
+      dispatch(questActions.setQuestWish(newProduct));
+    }
+  };
+
+  const onClickDeleteCard = async () => {
+    if (isLoggedIn) {
+      const newProductList = user.wishList?.filter(
+        (product) => product.id !== productId
+      );
+
+      const updateUserData = {
+        ...user,
+        wishList: newProductList
+      };
+
+      dispatch(productActions.deleteProductId(productId));
+
+      await updateUser(updateUserData)
+        .unwrap()
+        .then((data) => {
+          if (data) {
+            dispatch(userActions.setUser(updateUserData));
+          }
+        });
+    } else {
+      const updatedWishList = quest.wishList?.filter(
+        (product) => product.id !== productId
+      );
+
+      const updateQuest = {
+        ...quest,
+        wishList: updatedWishList
+      };
+
+      dispatch(productActions.deleteProductId(productId));
+      dispatch(questActions.updateQuest(updateQuest));
+    }
+  };
+
+  const onClickIcon = () => {
+    if (iconAction === 'addToWishList') {
+      onClickAddToWishlist();
+    } else if (iconAction === 'DeleteCard') {
+      onClickDeleteCard();
+    }
+  };
 
   return (
     <div
@@ -108,11 +187,16 @@ export const ProductCard: FC<ProductCardProps> = ({
         {children}
         <div className={styles.iconsWrapper}>
           <div className={styles.iconCard}>
-            <IconButton
-              backgroundColor='white'
-              onClick={() => onClickAddToWishlist()}
-            >
-              <WishIcon />
+            <IconButton backgroundColor='white' onClick={onClickIcon}>
+              <>
+                {!icon &&
+                  (isProductInWishlist ? (
+                    <LikeIconClickOn />
+                  ) : (
+                    <LikeIconClickOff />
+                  ))}
+              </>
+              {icon}
             </IconButton>
           </div>
           <Link to={`product/${productId}`}>
@@ -130,9 +214,9 @@ export const ProductCard: FC<ProductCardProps> = ({
             backgroundColor='black'
             textColor='white'
             onClick={() => onClickAddToCart()}
-            disabled={disabled}
+            disabled={disabledCard}
           >
-            {!disabled ? 'Add To Cart' : 'Added'}
+            {!disabledCard ? 'Add To Cart' : 'Added'}
           </Button>
         )}
       </div>

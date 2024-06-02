@@ -23,7 +23,8 @@ import {
   getCartRoute,
   getContactRoute,
   getHomeRoute,
-  getSignInRoute
+  getSignInRoute,
+  getWishListRoute
 } from '@/shared/libs/constants/routes';
 // styles
 import styles from './HeaderNavMenu.module.scss';
@@ -88,9 +89,21 @@ export const HeaderNavMenu: FC<HeaderNavMenuProps> = ({}) => {
           <SearchIcon className={styles.searchIcon} />
         </div>
         <div className={styles.wrapperIconButtons}>
-          <div className={styles.wishButton}>
-            <IconButton backgroundColor='white' children={<WishIcon />} />
-          </div>
+          <Link
+            to={getWishListRoute()}
+            textColor='white'
+            textDecoration='none'
+            onClick={() => scrollUp()}
+          >
+            <div className={styles.cartButton}>
+              {currentUser.wishList?.length != 0 ? (
+                <div className={styles.counterSelectedProducts}>
+                  <span>{currentUser.wishList?.length}</span>
+                </div>
+              ) : null}
+              <IconButton backgroundColor='white' children={<WishIcon />} />
+            </div>
+          </Link>
           <Link
             to={getCartRoute()}
             textColor='white'

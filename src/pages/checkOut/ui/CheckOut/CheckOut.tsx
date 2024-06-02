@@ -1,5 +1,5 @@
 // react
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 //lib
@@ -42,7 +42,7 @@ export const CheckOut: FC<CheckOutProps> = ({}) => {
     setIsChecked(!isChecked);
   };
 
-  const { formState, register, handleSubmit, reset } = useForm<any>({
+  const { formState, register, handleSubmit, reset, setValue } = useForm<any>({
     mode: 'onChange',
     resolver: yupResolver(checkOutSchema)
   });
@@ -70,6 +70,18 @@ export const CheckOut: FC<CheckOutProps> = ({}) => {
     }
   );
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      setValue('firstName', user.username);
+      setValue('companyName', user.companyName);
+      setValue('streetAddress', user.streetAddress);
+      setValue('apartment', user.apartment);
+      setValue('town', user.town);
+      setValue('phone', user.phone);
+      setValue('email', user.email);
+    }
+  }, [currentUser, setValue]);
+
   return (
     <div className={styles.CheckOut}>
       <div className={styles.headerAccount}>
@@ -94,7 +106,7 @@ export const CheckOut: FC<CheckOutProps> = ({}) => {
                 register={register('firstName')}
                 error={formState.errors.firstName}
                 label='First Name*'
-                value={isLoggedIn ? user.username : ''}
+                setValue={setValue}
               />
             </div>
             <div className={styles.inputForm}>
@@ -104,7 +116,7 @@ export const CheckOut: FC<CheckOutProps> = ({}) => {
                 register={register('companyName')}
                 error={formState.errors.companyName}
                 label='Company Name'
-                value={isLoggedIn ? user.companyName : ''}
+                setValue={setValue}
               />
             </div>
             <div className={styles.inputForm}>
@@ -114,7 +126,7 @@ export const CheckOut: FC<CheckOutProps> = ({}) => {
                 register={register('streetAddress')}
                 error={formState.errors.streetAddress}
                 label='Street Address*'
-                value={isLoggedIn ? user.streetAddress : ''}
+                setValue={setValue}
               />
             </div>
             <div className={styles.inputForm}>
@@ -124,7 +136,7 @@ export const CheckOut: FC<CheckOutProps> = ({}) => {
                 register={register('apartment')}
                 error={formState.errors.apartment}
                 label='Apartment, floor, etc. (optional)'
-                value={isLoggedIn ? user.apartment : ''}
+                setValue={setValue}
               />
             </div>
             <div className={styles.inputForm}>
@@ -134,7 +146,7 @@ export const CheckOut: FC<CheckOutProps> = ({}) => {
                 register={register('town')}
                 error={formState.errors.town}
                 label='Town/City*'
-                value={isLoggedIn ? user.town : ''}
+                setValue={setValue}
               />
             </div>
             <div className={styles.inputForm}>
@@ -144,7 +156,7 @@ export const CheckOut: FC<CheckOutProps> = ({}) => {
                 register={register('phone')}
                 error={formState.errors.phone}
                 label='Phone Number*'
-                value={isLoggedIn ? user.phone : ''}
+                setValue={setValue}
               />
             </div>
             <div className={styles.inputForm}>
@@ -154,7 +166,7 @@ export const CheckOut: FC<CheckOutProps> = ({}) => {
                 register={register('email')}
                 error={formState.errors.email}
                 label='Email Address*'
-                value={isLoggedIn ? user.email : ''}
+                setValue={setValue}
               />
             </div>
             <div className={styles.buttonForm}>

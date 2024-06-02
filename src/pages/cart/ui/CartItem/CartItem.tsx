@@ -83,7 +83,7 @@ export const CartItem: FC<CartItemProps> = ({
       dispatch(questActions.updateQuest({ products: newProductList }));
     }
   };
-  //count quantity
+
   const onIncreaseQuantity = () => {
     updateProductQuantity(quantity + 1);
   };
@@ -93,19 +93,19 @@ export const CartItem: FC<CartItemProps> = ({
       updateProductQuantity(quantity - 1);
     }
   };
-  //show/hide cancel button
+
   const handleMouseEnter = () => {
     setShowCancelButton(!showCancelButton);
   };
   const handleMouseLeave = () => {
     setShowCancelButton(!showCancelButton);
   };
-  //count price
+
   const priceWithDiscount = Math.round(price - (price * discountPercent) / 100);
   const currentPrice = discountPercent ? priceWithDiscount : price;
 
   const totalPrice = quantity * currentPrice;
-  //delete product
+
   const deleteProduct = async (productId: number) => {
     if (isLoggedIn) {
       const newProductList = user.products?.filter(

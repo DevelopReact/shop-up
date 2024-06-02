@@ -6,7 +6,8 @@ import { IProduct } from '@/entities/product';
 
 const initialState: QuestStateSchema = {
   quest: {
-    products: []
+    products: [],
+    wishList: []
   }
 };
 
@@ -14,8 +15,11 @@ const questSlice = createSlice({
   name: 'quest',
   initialState: initialState,
   reducers: {
-    setQuest(state, action: PayloadAction<IProduct>) {
+    setQuestProduct(state, action: PayloadAction<IProduct>) {
       state.quest.products?.push(action.payload);
+    },
+    setQuestWish(state, action: PayloadAction<IProduct>) {
+      state.quest.wishList?.push(action.payload);
     },
     updateQuest(state, action: PayloadAction<IQuest>) {
       state.quest = action.payload;

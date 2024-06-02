@@ -10,6 +10,8 @@ import { Loader } from '@/shared/ui/Loader';
 //constants
 import { scrollUp } from '@/shared/libs/constants/scrollUp';
 import { getErrorRoute } from '@/shared/libs/constants/routes';
+//assets
+import WishIcon from '@/shared/libs/assets/svg/WishIcon.svg?react';
 // styles
 import styles from './RelatedItem.module.scss';
 
@@ -51,6 +53,8 @@ export const RelatedItem: FC<RelatedItemProps> = ({}) => {
                 price={attributes.price}
                 discountPercent={attributes.discountPercent}
                 productId={id}
+                icon={<WishIcon />}
+                iconAction='addToWishList'
               />
             ))
           )}

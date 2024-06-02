@@ -70,6 +70,7 @@ export const MonthOffer: FC<MonthOfferProps> = ({}) => {
                 price={attributes.price}
                 discountPercent={attributes.discountPercent}
                 productId={id}
+                iconAction='addToWishList'
               />
             ))
           )}
