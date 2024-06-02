@@ -1,0 +1,10 @@
+@import '@/app/styles/mixins/mixins.scss';
+@import '@/app/styles/variables/backgroundColor.scss';
+@import '@/app/styles/variables/fontColor.scss';
+
+.WishList{
+	width: 81.25%;
+	padding: 100px 0 50px 0;
+	@include FlexContainer(flex-start);
+	gap: 16px;
+}

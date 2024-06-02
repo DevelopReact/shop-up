@@ -27,6 +27,7 @@ import WishIcon from '@/shared/libs/assets/svg/WishIcon.svg?react';
 // styles
 import styles from './ProductDetails.module.scss';
 import { IProduct } from '../..';
+import { IUser } from '@/entities/user/model/types/userTypes';
 
 interface ProductDetailsProps {}
 
@@ -90,17 +91,17 @@ export const ProductDetails: FC<ProductDetailsProps> = ({}) => {
       }
     };
 
-    const currentProducts = user.products || quest.products || [];
-
-    const isProductInCart = currentProducts.some(
-      (item) => item.id === productById?.data.id
-    );
-
-    const updatedProducts = currentProducts.map((item) => {
-      return item.id === productById?.data.id ? updateProductById : item;
-    });
-
     if (isLoggedIn) {
+      const currentProducts = user.products || [];
+
+      const isProductInCart = currentProducts.some(
+        (item) => item.id === productById?.data.id
+      );
+
+      const updatedProducts = currentProducts.map((item) => {
+        return item.id === productById?.data.id ? updateProductById : item;
+      });
+
       if (!isProductInCart) {
         updateUser({
           id: user.id,
@@ -127,13 +128,18 @@ export const ProductDetails: FC<ProductDetailsProps> = ({}) => {
           });
       }
     } else {
+      const currentProducts = quest.products || [];
+
+      const isProductInCart = currentProducts.some(
+        (item) => item.id === productById?.data.id
+      );
+
+      const updatedProducts = currentProducts.map((item) => {
+        return item.id === productById?.data.id ? updateProductById : item;
+      });
+
       if (!isProductInCart) {
-        dispatch(
-          questActions.updateQuest({
-            ...quest,
-            products: [...currentProducts, updateProductById]
-          })
-        );
+        dispatch(questActions.setQuestProduct(updateProductById));
       }
 
       if (isProductInCart) {
@@ -141,6 +147,71 @@ export const ProductDetails: FC<ProductDetailsProps> = ({}) => {
           questActions.updateQuest({
             ...quest,
             products: updatedProducts
+          })
+        );
+      }
+    }
+  };
+
+  const onClickAddToWishList = () => {
+    setActiveWish(!activeWish);
+
+    const newProduct: IProduct = productById!.data;
+
+    if (isLoggedIn) {
+      const currentWishList = user.wishList || [];
+
+      const isProductInWishList = user.wishList?.some(
+        (item) => item.id === newProduct.id
+      );
+
+      const updatedWishList = user.wishList?.map((item) => {
+        return item.id === newProduct.id ? newProduct : item;
+      });
+
+      if (!isProductInWishList) {
+        updateUser({
+          ...user,
+          wishList: [...currentWishList, newProduct]
+        })
+          .unwrap()
+          .then((data: IUser) => {
+            if (data) {
+              dispatch(userActions.setUser(data));
+            }
+          });
+      }
+
+      if (isProductInWishList) {
+        updateUser({
+          ...user,
+          wishList: updatedWishList
+        })
+          .unwrap()
+          .then((data: IUser) => {
+            if (data) {
+              dispatch(userActions.setUser(data));
+            }
+          });
+      }
+    } else {
+      const isProductInWishList = quest.wishList?.some(
+        (item) => item.id === newProduct.id
+      );
+
+      const updatedWishList = quest.wishList?.map((item) => {
+        return item.id === newProduct.id ? newProduct : item;
+      });
+
+      if (!isProductInWishList) {
+        dispatch(questActions.setQuestWish(newProduct));
+      }
+
+      if (isProductInWishList) {
+        dispatch(
+          questActions.updateQuest({
+            ...quest,
+            wishList: updatedWishList
           })
         );
       }
@@ -267,7 +338,7 @@ export const ProductDetails: FC<ProductDetailsProps> = ({}) => {
                   className={classNames(styles.wishButton, {
                     [styles.activeWish]: activeWish
                   })}
-                  onClick={() => setActiveWish(!activeWish)}
+                  onClick={() => onClickAddToWishList()}
                 >
                   <WishIcon />
                 </button>

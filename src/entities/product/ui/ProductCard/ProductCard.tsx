@@ -54,7 +54,7 @@ export const ProductCard: FC<ProductCardProps> = ({
   const { isLoggedIn, user } = useSelector(getUserState);
   const { quest } = useSelector(getQuestState);
   const [updateUser] = useUpdateUserMutation();
-  const { data: product } = useGetProductIdQuery(productId);
+  const { data: productById } = useGetProductIdQuery(productId);
 
   const [isHovered, setIsHovered] = useState(false);
   const [disabledCard, setDisabledCard] = useState(false);
@@ -83,7 +83,7 @@ export const ProductCard: FC<ProductCardProps> = ({
   };
 
   const onClickAddToCart = async () => {
-    const newProduct: IProduct = product!.data;
+    const newProduct: IProduct = productById!.data;
 
     dispatch(productActions.setProductCart(newProduct));
 
@@ -106,18 +106,34 @@ export const ProductCard: FC<ProductCardProps> = ({
     }
   };
 
-  const onClickAddToWishlist = () => {
-    const newProduct: IProduct = product!.data;
+  const onClickAddToWishList = () => {
+    const newProduct: IProduct = productById!.data;
 
     if (isLoggedIn) {
       const currentWishList = user.wishList || [];
-      const updatedWishList = [...currentWishList, newProduct];
 
       const isProductInWishList = user.wishList?.some(
         (item) => item.id === newProduct.id
       );
 
+      const updatedWishList = user.wishList?.map((item) => {
+        return item.id === newProduct.id ? newProduct : item;
+      });
+
       if (!isProductInWishList) {
+        updateUser({
+          ...user,
+          wishList: [...currentWishList, newProduct]
+        })
+          .unwrap()
+          .then((data: IUser) => {
+            if (data) {
+              dispatch(userActions.setUser(data));
+            }
+          });
+      }
+
+      if (isProductInWishList) {
         updateUser({
           ...user,
           wishList: updatedWishList
@@ -130,7 +146,26 @@ export const ProductCard: FC<ProductCardProps> = ({
           });
       }
     } else {
-      dispatch(questActions.setQuestWish(newProduct));
+      const isProductInWishList = quest.wishList?.some(
+        (item) => item.id === newProduct.id
+      );
+
+      const updatedWishList = quest.wishList?.map((item) => {
+        return item.id === newProduct.id ? newProduct : item;
+      });
+
+      if (!isProductInWishList) {
+        dispatch(questActions.setQuestWish(newProduct));
+      }
+
+      if (isProductInWishList) {
+        dispatch(
+          questActions.updateQuest({
+            ...quest,
+            wishList: updatedWishList
+          })
+        );
+      }
     }
   };
 
@@ -171,7 +206,7 @@ export const ProductCard: FC<ProductCardProps> = ({
 
   const onClickIcon = () => {
     if (iconAction === 'addToWishList') {
-      onClickAddToWishlist();
+      onClickAddToWishList();
     } else if (iconAction === 'DeleteCard') {
       onClickDeleteCard();
     }

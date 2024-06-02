@@ -132,6 +132,7 @@ export const CartItem: FC<CartItemProps> = ({
       );
 
       const updateQuest = {
+        ...quest,
         products: newProductList
       };
 
