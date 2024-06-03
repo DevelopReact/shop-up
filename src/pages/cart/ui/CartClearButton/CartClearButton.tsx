@@ -38,7 +38,7 @@ export const CartClearButton: FC<CartClearButtonProps> = ({}) => {
       await updateUser(updateUserData);
       refetch();
     } else {
-      dispatch(questActions.clearQuest());
+      dispatch(questActions.clearQuestProduct());
     }
   };
 

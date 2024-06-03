@@ -24,8 +24,8 @@ const questSlice = createSlice({
     updateQuest(state, action: PayloadAction<IQuest>) {
       state.quest = action.payload;
     },
-    clearQuest(state) {
-      state.quest = initialState.quest;
+    clearQuestProduct(state) {
+      state.quest.products = initialState.quest.products;
     }
   }
 });
