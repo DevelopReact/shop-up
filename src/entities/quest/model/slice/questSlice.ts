@@ -6,6 +6,10 @@ import { IProduct } from '@/entities/product';
 
 const initialState: QuestStateSchema = {
   quest: {
+    username: '',
+    email: '',
+    password: '',
+    town: '',
     products: [],
     wishList: []
   }

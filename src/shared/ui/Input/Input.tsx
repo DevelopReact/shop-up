@@ -37,6 +37,7 @@ export const Input: FC<InputProps> = ({
   value,
   label
 }) => {
+  //TODO use setValue in component
   useEffect(() => {
     if (setValue && value) {
       setValue(register?.name!, value);

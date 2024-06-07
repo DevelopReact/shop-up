@@ -8,7 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useUpdateUserMutation } from '@/entities/user/api/userAPI';
 //selectors
 import { getUserState, userActions } from '@/entities/user';
-import { getQuestState } from '@/entities/quest';
+import { getQuestState, questActions } from '@/entities/quest';
 //ui
 import { Input } from '@/shared/ui/Input';
 import { Button } from '@/shared/ui/Button';
@@ -33,7 +33,7 @@ export const CheckOut: FC<CheckOutProps> = ({}) => {
   const [updateUser] = useUpdateUserMutation();
   const { user, isLoggedIn } = useSelector(getUserState);
   const { quest } = useSelector(getQuestState);
-
+  console.log(quest);
   const currentUser = isLoggedIn ? user : quest;
 
   const [isChecked, setIsChecked] = useState(false);
@@ -48,7 +48,15 @@ export const CheckOut: FC<CheckOutProps> = ({}) => {
   });
 
   const onSubmit = handleSubmit(
-    ({ companyName, streetAddress, apartment, town, phone }) => {
+    ({
+      companyName,
+      streetAddress,
+      apartment,
+      town,
+      phone,
+      firstName,
+      email
+    }) => {
       if (isLoggedIn) {
         updateUser({
           ...user,
@@ -64,6 +72,20 @@ export const CheckOut: FC<CheckOutProps> = ({}) => {
               dispatch(userActions.setUser(data));
             }
           });
+      } else {
+        dispatch(
+          questActions.updateQuest({
+            products: quest.products,
+            wishList: quest.wishList,
+            username: firstName,
+            email,
+            companyName,
+            streetAddress,
+            apartment,
+            town,
+            phone
+          })
+        );
       }
 
       reset();

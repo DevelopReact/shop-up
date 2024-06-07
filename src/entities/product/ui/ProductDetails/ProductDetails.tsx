@@ -183,6 +183,7 @@ export const ProductDetails: FC<ProductDetailsProps> = ({}) => {
       }
 
       if (isProductInWishList) {
+        //TODO
         updateUser({
           ...user,
           wishList: updatedWishList
