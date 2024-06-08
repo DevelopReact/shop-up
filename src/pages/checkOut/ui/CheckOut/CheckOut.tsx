@@ -9,6 +9,8 @@ import { useUpdateUserMutation } from '@/entities/user/api/userAPI';
 //selectors
 import { getUserState, userActions } from '@/entities/user';
 import { getQuestState, questActions } from '@/entities/quest';
+//hooks
+import { useUpdateUser } from '@/entities/user/model/hooks/useUpdateUser';
 //ui
 import { Input } from '@/shared/ui/Input';
 import { Button } from '@/shared/ui/Button';
@@ -30,13 +32,15 @@ interface CheckOutProps {}
 
 export const CheckOut: FC<CheckOutProps> = ({}) => {
   const dispatch = useDispatch();
-  const [updateUser] = useUpdateUserMutation();
+  const [isChecked, setIsChecked] = useState(false);
+
   const { user, isLoggedIn } = useSelector(getUserState);
   const { quest } = useSelector(getQuestState);
-  console.log(quest);
-  const currentUser = isLoggedIn ? user : quest;
+  const [updateUser] = useUpdateUserMutation();
 
-  const [isChecked, setIsChecked] = useState(false);
+  // const { updateUser, ...result } = useUpdateUser();
+
+  const currentUser = isLoggedIn ? user : quest;
 
   const onChange = () => {
     setIsChecked(!isChecked);

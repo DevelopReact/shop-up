@@ -79,8 +79,12 @@ export const CartItem: FC<CartItemProps> = ({
             }
           : product
       );
-      console.log(quest);
-      dispatch(questActions.updateQuest({ products: newProductList }));
+      dispatch(
+        questActions.updateQuest({
+          ...quest,
+          products: newProductList
+        })
+      );
     }
   };
 

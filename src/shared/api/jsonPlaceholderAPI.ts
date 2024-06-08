@@ -29,9 +29,3 @@ export const jsonPlaceholderAPI = createApi({
 
   endpoints: () => ({})
 });
-
-class TodoService {
-  private endpoint = 'todos';
-
-  async getTodos() {}
-}
