@@ -18,7 +18,7 @@ import { Loader } from '@/shared/ui/Loader';
 interface WishListProps {}
 
 export const WishList: FC<WishListProps> = ({}) => {
-  const { data, isLoading, isError } = useGetProductsQuery();
+  const { data, isLoading } = useGetProductsQuery();
   const { user, isLoggedIn } = useSelector(getUserState);
   const { quest } = useSelector(getQuestState);
 

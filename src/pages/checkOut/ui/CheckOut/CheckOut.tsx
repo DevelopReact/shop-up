@@ -9,8 +9,6 @@ import { useUpdateUserMutation } from '@/entities/user/api/userAPI';
 //selectors
 import { getUserState, userActions } from '@/entities/user';
 import { getQuestState, questActions } from '@/entities/quest';
-//hooks
-import { useUpdateUser } from '@/entities/user/model/hooks/useUpdateUser';
 //ui
 import { Input } from '@/shared/ui/Input';
 import { Button } from '@/shared/ui/Button';
@@ -37,8 +35,6 @@ export const CheckOut: FC<CheckOutProps> = ({}) => {
   const { user, isLoggedIn } = useSelector(getUserState);
   const { quest } = useSelector(getQuestState);
   const [updateUser] = useUpdateUserMutation();
-
-  // const { updateUser, ...result } = useUpdateUser();
 
   const currentUser = isLoggedIn ? user : quest;
 
