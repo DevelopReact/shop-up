@@ -40,7 +40,7 @@ export const Input: FC<InputProps> = ({
   //TODO use setValue in component
   useEffect(() => {
     if (setValue && value) {
-      setValue(register?.name!, value);
+      setValue(register?.name!, value, { shouldValidate: true });
     }
   }, [value, setValue, register]);
 
