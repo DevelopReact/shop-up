@@ -15,7 +15,7 @@ setInterval(() => {
   fetch(jsonPlaceholderRootURL).catch(() =>
     console.log('Server is sleeping...')
   );
-}, 3000);
+}, 30000);
 
 export const jsonPlaceholderAPI = createApi({
   reducerPath: 'jsonPlaceholderAPI',
