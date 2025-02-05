@@ -3,9 +3,19 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 //selectors
 import { getUserState } from '@/entities/user/model/selectors/getUserState';
 // baseUrl
-import { jsonPlaceholderBaseURL } from '../libs/constants/jsonPlaceholderBaseURL';
+import {
+  jsonPlaceholderBaseURL,
+  jsonPlaceholderRootURL
+} from '../libs/constants/jsonPlaceholderBaseURL';
 //libs
 import { JWT_TOKEN } from '../libs/constants/jwtToken';
+
+//wake up render server
+setInterval(() => {
+  fetch(jsonPlaceholderRootURL).catch(() =>
+    console.log('Server is sleeping...')
+  );
+}, 3000);
 
 export const jsonPlaceholderAPI = createApi({
   reducerPath: 'jsonPlaceholderAPI',

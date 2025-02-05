@@ -19,7 +19,7 @@ import { LikeStarsCount } from '../LikeStarsCount';
 import { IconButton } from '@/shared/ui/IconButton';
 import { Button } from '@/shared/ui/Button';
 //constants
-import { jsonPlaceholderRootURL } from '@/shared/libs/constants/jsonPlaceholderBaseURL';
+import { jsonPlaceholderBaseURL } from '@/shared/libs/constants/jsonPlaceholderBaseURL';
 import { scrollUp } from '@/shared/libs/constants/scrollUp';
 //assets svg
 import EyeIcon from '@/shared/libs/assets/svg/EyeIcon.svg?react';
@@ -242,7 +242,7 @@ export const ProductCard: FC<ProductCardProps> = ({
             </div>
           </Link>
         </div>
-        <img src={`${jsonPlaceholderRootURL}${src}`} alt={titleCard} />
+        <img src={`${jsonPlaceholderBaseURL}${src}`} alt={titleCard} />
         {isHovered && (
           <Button
             type='button'

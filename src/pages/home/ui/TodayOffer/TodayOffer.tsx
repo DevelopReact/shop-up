@@ -27,10 +27,13 @@ export const TodayOffer: FC<TodayOfferProps> = ({}) => {
   const navigate = useNavigate();
 
   const { data, isLoading, isError } = useGetProductsQuery();
+  console.log(data);
 
   const visibleFlashProduct = data?.data
     .slice(0, 7)
     .filter((data: IProduct) => data.attributes.discountPercent);
+
+  console.log(visibleFlashProduct?.map((card) => card));
 
   const [startVisibleIndex, setStartVisibleIndex] = useState(0);
   //move list left on click
